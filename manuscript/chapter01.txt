@@ -300,7 +300,7 @@ var styles = StyleSheet.create({
 
 The result is shown in figure 9-X.
 
-![alt text needed](images/original_ch9-timer-text.png)
+![alt text needed](images/ch9-timer-text.png)
 
 Conveniently, we can combine two or more style objects in the `style` property using an array. For example, this `Text` element uses styles from `navBarText` and `navBarButtonText`:
 
@@ -347,7 +347,7 @@ Consider this example, which renders a city name input field with the handler `t
 
 The result is shown in figure 9-X, where you can observe the Search key on the virtual keyboard.
 
-![alt text needed](images/original_ch9-textinput.png)
+![alt text needed](images/ch9-textinput.png)
 
 With the `onChangeText` property, we get the value of the input field as the argument to the handler function (`handleCityName(event)`). For example, to process the name of the city and set the state of `cityName` in a controlled component, we need to implement `handleCityName` like this:
 
@@ -485,7 +485,7 @@ var Button = React.createClass({
 
 The style of `TouchableHighlight` by itself is nothing; for this reason, when we implement buttons we either style the text inside of the `TouchableHighlight` (figure 9-X) or use an image with the `Image` component.
 
-![alt text needed](images/original_ch9-timer-button.png)
+![alt text needed](images/ch9-timer-button.png)
 
 Similar components to `TouchableHighlight` are:
 
@@ -498,7 +498,7 @@ Similar components to `TouchableHighlight` are:
 
 You've probably seen and used the `Switch` component or a similar native element many times. A visual example is shown in figure 9-X. It's a small toggle that is not dissimilar to a checkbox. This is a Boolean on/off input element that comes in handy in forms and app settings.
 
-![alt text needed](images/original_ch9-timer-switch.png)
+![alt text needed](images/ch9-timer-switch.png)
 
 When implementing `Switch`, you provide at least two properties, `onValueChange` and `value` (a controlled component again!). For example, this toggle makes the apps save the city name, or not:
 
@@ -611,9 +611,9 @@ We're focusing on iOS at the moment, so the installation is as follows:
 9. Click on the plus button (+) and add libRNAudioPlayer.a under Workspace, or just drag and drop libRNAudioPlayer.a from the Project Navigator. It's under Libraries/RNAudioPlayer.xcodeproj/Products.
 10. Run your project (press Command+R or click the black rectangle signifying "play").
 
-![alt text needed](images/original_ch9-project-manager.png)
+![alt text needed](images/ch9-project-manager.png)
 
-![alt text needed](images/original_ch9-target.png)
+![alt text needed](images/ch9-target.png)
 
 If you did everything correctly, in the index.ios.js file, you can import the module with `require()`:
 
@@ -629,7 +629,7 @@ AudioPlayer.play('flute_c_long_01.wav')
 
 The sound file needs to be included in the bundle. To do so, select Copy Bundle Resources and add flute_c_long_01.wav or your own sound file as shown in figure 9-X.
 
-![alt text needed](images/original_ch9-file.png)
+![alt text needed](images/ch9-file.png)
 
 ## Project: Timer
 
@@ -640,7 +640,7 @@ You've seen bits and pieces from the Timer app (figure 9-X), which is in ch9/tim
 * `Button`—A component that shows a button and triggers the start of the countdown by invoking the handler passed to it by the parent (`TimerWrapper`)
 
 
-![alt text needed](images/original_ch9-timer-1.png)
+![alt text needed](images/ch9-timer-1.png)
 
 We start the index.ios.js file with importations of React Native, its objects, and Audio Player:
 
@@ -824,7 +824,7 @@ React packager ready.
 
 Go to your Simulator and refresh it. You should see buttons with seconds on them and the switch in the off position. Turn it on to use minutes and the buttons will change. Pressing on 5 minutes will start the countdown showing seconds left, as shown in figure 9-X.
 
-![alt text needed](images/original_ch9-timer-2.png)
+![alt text needed](images/ch9-timer-2.png)
 
 I dare you to redesign this little app (make it prettier!), publish it to the App Store, and send me the link. Maybe you can get to the top charts. Flappy Bird did.
 
@@ -832,13 +832,13 @@ I dare you to redesign this little app (make it prettier!), publish it to the Ap
 
 The idea of this project is to fetch weather forecasts from the OpenWeatherMap API based on the city name provided by the user (figure 9-X). In this project we'll be utilizing `Navigator` to switch between the screens and show a navigation menu on top with a button to go back.
 
-![alt text needed](images/original_ch9-weather-1.png)
+![alt text needed](images/ch9-weather-1.png)
 
 Also, there will be a "remember me" feature to save the entered city name for future uses. The persistence will be implemented with `AsyncStorage`.
 
 The resulting forecast data will be shown in a grid with the date, description, and temperature in F and C, as shown in figure 9-X.
 
-![alt text needed](images/original_ch9-weather-2.png)
+![alt text needed](images/ch9-weather-2.png)
 
 To get started, use the scaffolding provided by the React Native CLI tool (if you don't have v0.1.7, follow the instructions at the beginning of this chapter to get it):
 
@@ -1044,7 +1044,7 @@ If we pass the first statement, we are on the Forecast. Set the previous route (
 
 Now, return the button, which is a `TouchableOpacity` component with `Text` in it. I use angle brackets with the previous route's name as the button label, as shown in figure 9-X. You can use Next or something else. This `Navigator` component is highly customizable. Most likely, you'd have some nicely designed images as well.
 
-![alt text needed](images/original_ch9-weather-3.png)
+![alt text needed](images/ch9-weather-3.png)
 
 ```js
     return (
@@ -1403,7 +1403,7 @@ In the row, we output the date (`dt_txt`), description (rainy or sunny), and tem
 
 The result will look as shown in figure 9-X.
 
-![alt text needed](images/original_ch9-weather-5.png)
+![alt text needed](images/ch9-weather-5.png)
 
 Next, we export the `Forecast` component, which is a `ScrollView` with `Text` and a `ListView`:
 
@@ -1490,7 +1490,7 @@ AsyncStorage GET for cityName: "null"
 
 Play with the toggle, enter a name (figure 9-X), and get the weather report. The app is done. Boom! Now put some nice UI on it and ship it!
 
-![alt text needed](images/original_ch9-weather-4.png)
+![alt text needed](images/ch9-weather-4.png)
 
 ## Quiz
 
