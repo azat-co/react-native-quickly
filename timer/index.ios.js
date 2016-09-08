@@ -17,16 +17,21 @@ var {
   Switch
 } = React
 
-const timerOptions = [5, 7, 10, 12, 15, 20]
+var timerOptions = [5, 7, 10, 12, 15, 20]
 
 var TimerWrapper = React.createClass({
-  getInitialState () {
-    return {time: null, int: null, isMinutes: false}
+  getInitialState() {
+    return {
+      time: null,
+      int: null,
+      isMinutes: false
+    }
   },
-  toggleTime(){
-    let time = this.state.time
-    if (time == 0 ) time = null
-    this.setState({isMinutes: !this.state.isMinutes, time: time})
+  toggleTime() {
+    this.setState({
+      isMinutes: !this.state.isMinutes,
+      time: this.state.time || null
+    })
   },
   startTimer(time) {
     clearInterval(this.state.int)
@@ -47,9 +52,13 @@ var TimerWrapper = React.createClass({
           <Text style={styles.heading}>Timer</Text>
           <Text style={styles.instructions}>Press a button</Text>
           <View style={styles.buttons}>
-            {timerOptions.map((item, index, list)=>{
-              return <Button key={index} time={item} startTimer={this.startTimer} isMinutes={this.state.isMinutes}/>
-            })}
+            {timerOptions.map((item, index) => (
+              <Button
+                key={index}
+                time={item}
+                startTimer={this.startTimer}
+                isMinutes={this.state.isMinutes} />
+            ))}
           </View>
           <Text>Minutes</Text>
           <Switch onValueChange={this.toggleTime} value={this.state.isMinutes}></Switch>
@@ -62,7 +71,7 @@ var TimerWrapper = React.createClass({
 
 var Button = React.createClass({
   startTimer(event) {
-    let time = (this.props.isMinutes) ? this.props.time*60 : this.props.time
+    var time = (this.props.isMinutes) ? this.props.time*60 : this.props.time
     return this.props.startTimer(time)
   },
   render() {
@@ -75,18 +84,24 @@ var Button = React.createClass({
 })
 
 var Timer = React.createClass({
-   render() {
-     if (this.props.time == 0) {
+  render() {
+    if (this.props.time == 0) {
       AudioPlayer.play('flute_c_long_01.wav')
-     }
-     if (this.props.time == null || this.props.time == 0) return <View><Text  style={styles.heading}> </Text></View>
-     return (
-       <View>
-         <Text style={styles.heading}>{this.props.time}</Text>
-         <Text>Seconds left</Text>
-       </View>
-     )
     }
+    if (this.props.time == null || this.props.time == 0) {
+      return (
+        <View>
+          <Text style={styles.heading} />
+        </View>
+      )
+    }
+    return (
+      <View>
+        <Text style={styles.heading}>{this.props.time}</Text>
+        <Text>Seconds left</Text>
+      </View>
+    )
+  }
 })
 
 var styles = StyleSheet.create({
@@ -111,7 +126,7 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'blue',
     padding: 10,
-  	borderRadius: 20,
+    borderRadius: 20,
     fontWeight: '600'
   },
   buttons: {
