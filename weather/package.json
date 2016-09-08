@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start"
+    "start": "react-native start && node ./weather-api.js"
   },
   "dependencies": {
     "react-native": "^0.17.0"
