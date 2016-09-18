@@ -245,7 +245,7 @@ Describing all the React Native components would take a book on its own. Also, a
 
 All these components were selected because knowing them will provide you with the bare minimum to build somewhat useful apps, as you'll see in the Timer and Weather App projects. Also, these components are universal; that is, you can (and should) use them for iOS and Android. Maybe you can even use the same code base for index.ios.js and index.android.js.
 
-For this section of the book, I'll be using code snippets from the Timer and Weather App projects to make the examples more realistic than just some foo-bars. The code for Timer is in ch9/timer and on [GitHub](https://github.com/azat-co/react/tree/master/ch9/timer). The code for Weather App is in ch9/weather and on [GitHub](https://github.com/azat-co/react/tree/master/ch9/weather).
+For this section of the book, I'll be using code snippets from the Timer and Weather App projects to make the examples more realistic than just some foo-bars. The code for Timer is in `timer`. The code for Weather App is in `weather`.
 
 ## View
 
@@ -637,7 +637,7 @@ That's all the prep. Now we can implement Timer!
 
 # Project: Timer
 
-You've seen bits and pieces from the Timer app (Figure 8), which is in ch9/timer and on [GitHub](https://github.com/azat-co/react/tree/master/ch9/timer). I think it will be beneficial if we go through the implementation at once. The main file is `index.ios.js`. It has three components, not unlike my browser/web React Timer from React Quickly (Manning, 2016), ([GitHub](https://github.com/azat-co/react-quickly/tree/master/projects/timer)):
+You've seen bits and pieces from the Timer app (Figure 8), which is in `timer`. I think it will be beneficial if we go through the implementation at once. The main file is `index.ios.js`. It has three components, not unlike my browser/web React Timer from React Quickly (Manning, 2016), ([GitHub](https://github.com/azat-co/react-quickly/tree/master/projects/timer)):
 
 * `TimerWrapper`—A smart component that has most of the logic for the timer
 * `Timer`—A dumb component that plays the sound when the time is up and displays the number of seconds left
