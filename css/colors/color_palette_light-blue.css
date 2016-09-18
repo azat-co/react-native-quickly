@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Light Blue
+
+background_solid    { background: #0277bd; }
+button              { background: #03a9f4; }
+button_hover        { background: #03afff; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #03a9f4;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #03afff;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #03a9f4;
+    -webkit-box-shadow: 0 1px 0 0 #03a9f4;
+    -moz-box-shadow: 0 1px 0 0 #03a9f4;
+    box-shadow: 0 1px 0 0 #03a9f4; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #0277bd;
+}
+
+a {
+	color:#03a9f4
+}

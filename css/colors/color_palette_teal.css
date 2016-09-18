@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Teal
+
+background_solid    { background: #00695c; }
+button              { background: #009688; }
+button_hover        { background: #00a393; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #009688;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #00a393;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #009688;
+    -webkit-box-shadow: 0 1px 0 0 #009688;
+    -moz-box-shadow: 0 1px 0 0 #009688;
+    box-shadow: 0 1px 0 0 #009688; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #00695c;
+}
+
+a {
+	color:#009688
+}

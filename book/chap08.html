@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Project: Weather App</title>
+<link href="stylesheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body dir="ltr" class="kramdown">
+<div id="leanpub-toc">
+<h2></h2>
+<ol class="toc">
+<ul class='toc no-parts'>
+  <li>
+    <a href='chap01.html#leanpub-auto-why-react-native-is-awesome'>Why React Native is Awesome</a>
+  </li>
+  <li>
+    <a href='chap02.html#leanpub-auto-setting-up-react-native-development'>Setting up React Native Development</a>
+  </li>
+  <li>
+    <a href='chap03.html#leanpub-auto-hello-world-and-the-react-native-cli'>Hello World and the React Native CLI</a>
+  </li>
+  <li>
+    <a href='chap04.html#leanpub-auto-styles-and-flexbox'>Styles and Flexbox</a>
+  </li>
+  <li>
+    <a href='chap05.html#leanpub-auto-main-react-native-ui-components'>Main React Native UI Components</a>
+    <ul>
+      <li>
+        <a href='chap05.html#leanpub-auto-view'>View</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-text'>Text</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-textinput'>TextInput</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-scrollview'>ScrollView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-listview'>ListView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-touchablehighlight'>TouchableHighlight</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-switch'>Switch</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-navigator'>Navigator</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href='chap06.html#leanpub-auto-importing-modules-into-the-xcode-project'>Importing Modules into the Xcode Project</a>
+  </li>
+  <li>
+    <a href='chap07.html#leanpub-auto-project-timer'>Project: Timer</a>
+  </li>
+  <li>
+    <a href='chap08.html#leanpub-auto-project-weather-app'>Project: Weather App</a>
+  </li>
+  <li>
+    <a href='chap09.html#leanpub-auto-quiz'>Quiz</a>
+  </li>
+  <li>
+    <a href='chap10.html#leanpub-auto-actions'>Actions</a>
+  </li>
+  <li>
+    <a href='chap11.html#leanpub-auto-summary'>Summary</a>
+  </li>
+  <li>
+    <a href='chap12.html#leanpub-auto-quiz-answers'>Quiz Answers</a>
+  </li>
+</ul>
+
+</ol>
+</div>
+<div id="leanpub-main" class="kramdown">
+<h2 id="leanpub-auto-project-weather-app">Project: Weather App</h2>
+
+<p>The idea of this project is to fetch weather forecasts from the OpenWeatherMap API based on the city name provided by the user (Figure 10). In this project we’ll be utilizing <code>Navigator</code> to switch between the screens and show a navigation menu on top with a button to go back.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-weather-1.png" alt="Figure 10: Weather app with city name search input" />
+  <figcaption>Figure 10: Weather app with city name search input</figcaption>
+</figure>
+
+
+<p>Also, there will be a “remember me” feature to save the entered city name for future uses. The persistence will be implemented with <code>AsyncStorage</code>.</p>
+
+<p>The resulting forecast data will be shown in a grid with the date, description, and temperature in F and C, as shown in Figure 11.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-weather-2.png" alt="Figure 11: Weather forecast for London, UK for every 3 hours" />
+  <figcaption>Figure 11: Weather forecast for London, UK for every 3 hours</figcaption>
+</figure>
+
+
+<p>To get started, use the scaffolding provided by the React Native CLI tool (if you don’t have v0.1.7, follow the instructions at the beginning of this chapter to get it):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>$ react-native init weather
+</pre></div>
+
+</figure>
+
+<p>The command will output something like this:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>This will walk you through creating a new React Native project in /Users/azat/Do\
+<code class="lineno"> 2 </code>cuments/Code/react/ch9/weather
+<code class="lineno"> 3 </code>Installing react-native package from npm...
+<code class="lineno"> 4 </code>Setting up new React Native app in /Users/azat/Documents/Code/react/ch9/weather
+<code class="lineno"> 5 </code>To run your app on iOS:
+<code class="lineno"> 6 </code>   Open /Users/azat/Documents/Code/react/ch9/weather/ios/weather.xcodeproj in Xc\
+<code class="lineno"> 7 </code>ode
+<code class="lineno"> 8 </code>   Hit the Run button
+<code class="lineno"> 9 </code>To run your app on Android:
+<code class="lineno">10 </code>   Have an Android emulator running (quickest way to get started), or a device c\
+<code class="lineno">11 </code>onnected
+<code class="lineno">12 </code>   cd /Users/azat/Documents/Code/react/ch9/weather
+<code class="lineno">13 </code>   react-native run-android
+</pre></div>
+
+</figure>
+
+<p>Open the iOS project in Xcode with this command:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>$ open ios/weather.xcodeproj
+</pre></div>
+
+</figure>
+
+<p>In addition to the already existing <code>index.ios.js</code>, create four files, <code>forecast.ios.js</code>, <code>search.ios.js</code>, <code>weather-api.js</code>, and <code>response.json</code>, so the project structure looks like this:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>/weather
+<code class="lineno"> 2 </code>  /android
+<code class="lineno"> 3 </code>    ...
+<code class="lineno"> 4 </code>  /ios
+<code class="lineno"> 5 </code>    /weather
+<code class="lineno"> 6 </code>      /Base.Iproj
+<code class="lineno"> 7 </code>        ...
+<code class="lineno"> 8 </code>      /Images.xcassets
+<code class="lineno"> 9 </code>        ...
+<code class="lineno">10 </code>      - AppDelegate.h
+<code class="lineno">11 </code>      - AppDelegate.m
+<code class="lineno">12 </code>      - Info.plist
+<code class="lineno">13 </code>      - main.m
+<code class="lineno">14 </code>    /weather.xcodeproj
+<code class="lineno">15 </code>      /project.xcworkspace
+<code class="lineno">16 </code>        ...
+<code class="lineno">17 </code>      /xcshareddata
+<code class="lineno">18 </code>        ...
+<code class="lineno">19 </code>      /xcuserdata
+<code class="lineno">20 </code>        ...
+<code class="lineno">21 </code>      - project.pbxproj
+<code class="lineno">22 </code>    /weatherTests
+<code class="lineno">23 </code>      - Info.plist
+<code class="lineno">24 </code>      - weatherTests.m
+<code class="lineno">25 </code>  /node_modules
+<code class="lineno">26 </code>    ...
+<code class="lineno">27 </code>  - .flowconfig
+<code class="lineno">28 </code>  - .gitignore
+<code class="lineno">29 </code>  - .watchmanconfig
+<code class="lineno">30 </code>  - forecast.ios.js
+<code class="lineno">31 </code>  - index.android.js
+<code class="lineno">32 </code>  - index.ios.js
+<code class="lineno">33 </code>  - package.json
+<code class="lineno">34 </code>  - response.json
+<code class="lineno">35 </code>  - search.ios.js
+<code class="lineno">36 </code>  - weather-api.json
+</pre></div>
+
+</figure>
+
+<p>The files <code>search.ios.js</code> and <code>forecast.ios.js</code> will be the components for the first screen, which will have the input field for the city name, and the second screen, which will show the forecast, respectively. But before we start implementing <code>Search</code> and <code>Forecast</code>, let’s code the <code>App</code> component and the navigation that will enable us to switch between the Search and Forecast screens.</p>
+
+<p>In the <code>index.ios.js</code> file, add the React Native classes shown in the following listing. The only classes that should be unfamiliar to you by now are <code>AsyncStorage</code> and <code>PixelRatio</code>—everything else was covered earlier in this chapter:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="s1">'use strict'</code>
+<code class="lineno"> 2 </code>
+<code class="lineno"> 3 </code><code class="kd">var</code> <code class="nx">React</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'react-native'</code><code class="p">)</code>
+<code class="lineno"> 4 </code>
+<code class="lineno"> 5 </code><code class="kd">var</code> <code class="p">{</code>
+<code class="lineno"> 6 </code>  <code class="nx">AppRegistry</code><code class="p">,</code>
+<code class="lineno"> 7 </code>  <code class="nx">StyleSheet</code><code class="p">,</code>
+<code class="lineno"> 8 </code>  <code class="nx">Text</code><code class="p">,</code>
+<code class="lineno"> 9 </code>  <code class="nx">View</code><code class="p">,</code>
+<code class="lineno">10 </code>  <code class="nx">Navigator</code><code class="p">,</code>
+<code class="lineno">11 </code>  <code class="nx">ListView</code><code class="p">,</code>
+<code class="lineno">12 </code>  <code class="nx">AsyncStorage</code><code class="p">,</code>
+<code class="lineno">13 </code>  <code class="nx">TouchableOpacity</code><code class="p">,</code>
+<code class="lineno">14 </code>  <code class="nx">PixelRatio</code>
+<code class="lineno">15 </code><code class="p">}</code> <code class="o">=</code> <code class="nx">React</code>
+</pre></div>
+
+</figure>
+
+<p>Import <code>Search</code>. The <code>const</code> is an ES6 thing. You can use <code>var</code> or learn about <code>const</code> and <code>let</code> in <a href="https://github.com/azat-co/cheatsheets/tree/master/es6">ES6/ES2016 cheatsheet</a>.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kr">const</code> <code class="nx">Search</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'./search.ios.js'</code><code class="p">)</code>
+</pre></div>
+
+</figure>
+
+<p>Now let’s create an abstraction for the storage, i.e., <code>AsyncStorage</code>. You can use <code>AsyncStorage</code> directly, but it’s better to have an abstraction like the one shown here. The <code>AsyncStorage</code> interface is very straightforward. It uses the <code>getItem()</code>, <code>removeItem()</code>, and <code>setItem()</code> methods. I’m sure you can guess what they mean. The only interesting part is that for <code>getItem()</code> we need to utilize <code>Promise</code>. The idea behind it is that <code>getItem()</code> results are asynchronous. There’s more on ES6 promises in <a href="https://github.com/azat-co/cheatsheets/tree/master/es6">the cheatsheet</a>.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kr">const</code> <code class="nx">storage</code> <code class="o">=</code> <code class="p">{</code>
+<code class="lineno"> 2 </code>  <code class="nx">getFromStorage</code><code class="p">(</code><code class="nx">name</code><code class="p">,</code> <code class="nx">callback</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="nx">AsyncStorage</code><code class="p">.</code><code class="nx">getItem</code><code class="p">(</code><code class="nx">name</code><code class="p">).</code><code class="nx">then</code><code class="p">((</code><code class="nx">value</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno"> 4 </code>      <code class="nx">console</code><code class="p">.</code><code class="nx">log</code><code class="p">(</code><code class="sb">`AsyncStorage GET for </code><code class="si">${</code><code class="nx">name</code><code class="si">}</code><code class="sb">: "</code><code class="si">${</code><code class="nx">value</code><code class="si">}</code><code class="sb">"`</code><code class="p">)</code>
+<code class="lineno"> 5 </code>      <code class="k">if</code> <code class="p">(</code><code class="nx">value</code><code class="p">)</code> <code class="nx">callback</code><code class="p">(</code><code class="nx">value</code><code class="p">)</code>
+<code class="lineno"> 6 </code>      <code class="k">else</code> <code class="nx">callback</code><code class="p">(</code><code class="kc">null</code><code class="p">)</code>
+<code class="lineno"> 7 </code>    <code class="p">}).</code><code class="nx">done</code><code class="p">()</code>
+<code class="lineno"> 8 </code>  <code class="p">},</code>
+<code class="lineno"> 9 </code>  <code class="nx">setInStorage</code><code class="p">(</code><code class="nx">name</code><code class="p">,</code> <code class="nx">value</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">10 </code>    <code class="nx">console</code><code class="p">.</code><code class="nx">log</code><code class="p">(</code><code class="sb">`AsyncStorage SET for </code><code class="si">${</code><code class="nx">name</code><code class="si">}</code><code class="sb">: "</code><code class="si">${</code><code class="nx">value</code><code class="si">}</code><code class="sb">"`</code><code class="p">)</code>
+<code class="lineno">11 </code>    <code class="nx">AsyncStorage</code><code class="p">.</code><code class="nx">setItem</code><code class="p">(</code><code class="nx">name</code><code class="p">,</code> <code class="nx">value</code><code class="p">)</code>
+<code class="lineno">12 </code>  <code class="p">},</code>
+<code class="lineno">13 </code>  <code class="nx">removeItem</code><code class="o">:</code> <code class="nx">AsyncStorage</code><code class="p">.</code><code class="nx">removeItem</code>
+<code class="lineno">14 </code><code class="p">}</code>
+</pre></div>
+
+</figure>
+
+<p>Remove the boilerplate component and replace it with <code>App</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>const App = React.createClass({
+<code class="lineno">2 </code>  render() {
+<code class="lineno">3 </code>    return (
+</pre></div>
+
+</figure>
+
+<p>The <code>App</code> component needs to render <code>Navigator</code>. We provide the <code>Search</code> component as the initial route:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>      <code class="o">&lt;</code><code class="nx">Navigator</code>
+<code class="lineno">2 </code>        <code class="nx">initialRoute</code><code class="o">=</code><code class="p">{{</code>
+<code class="lineno">3 </code>          <code class="nx">name</code><code class="o">:</code> <code class="s1">'Search'</code><code class="p">,</code>
+<code class="lineno">4 </code>          <code class="nx">index</code><code class="o">:</code> <code class="mi">0</code><code class="p">,</code>
+<code class="lineno">5 </code>          <code class="nx">component</code><code class="o">:</code> <code class="nx">Search</code><code class="p">,</code>
+<code class="lineno">6 </code>          <code class="nx">passProps</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">7 </code>            <code class="nx">storage</code><code class="o">:</code> <code class="nx">storage</code>
+<code class="lineno">8 </code>          <code class="p">}</code>
+<code class="lineno">9 </code>        <code class="p">}}</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>ref</code> property is how we can access the <code>Navigator</code> instance in the <code>App</code> component itself. The <code>navigator</code> object will be in <code>this.refs.navigator</code>, assuming <code>this</code> refers to <code>App</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="nx">ref</code><code class="o">=</code><code class="s1">'navigator'</code>
+</pre></div>
+
+</figure>
+
+<p>The navigation bar is the menu at the top of the screen, and we render it by using the <code>Navigator.NavigationBar</code> component and supplying the <code>routeMapper</code> property (we still need to implement this):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="nx">navigationBar</code><code class="o">=</code><code class="p">{</code>
+<code class="lineno">2 </code>          <code class="o">&lt;</code><code class="nx">Navigator</code><code class="p">.</code><code class="nx">NavigationBar</code>
+<code class="lineno">3 </code>            <code class="nx">routeMapper</code><code class="o">=</code><code class="p">{</code><code class="nx">NavigationBarRouteMapper</code><code class="p">}</code>
+<code class="lineno">4 </code>            <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">navBar</code><code class="p">}</code>
+<code class="lineno">5 </code>          <code class="o">/&gt;</code>
+<code class="lineno">6 </code>        <code class="p">}</code>
+</pre></div>
+
+</figure>
+
+<p>While the navigation bar is a nice-to-have but not necessary feature, the next property is important.
+It basically renders every route. In this example, I assume that the <code>route</code> argument has everything I need, such as components and properties. Another way to implement <code>Navigator</code> is to pass only IDs in <code>route</code> and resolve the component object from the ID by using some hash table (i.e., a route stack object).</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="nx">renderScene</code><code class="o">=</code><code class="p">{(</code><code class="nx">route</code><code class="p">,</code> <code class="nx">navigator</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno">2 </code>          <code class="kd">let</code> <code class="nx">props</code> <code class="o">=</code> <code class="nx">route</code><code class="p">.</code><code class="nx">passProps</code>
+</pre></div>
+
+</figure>
+
+<p>You can control where the <code>navigator</code> object is in children  by setting it to whatever property you want to use. I keep it consistent; the <code>navigator</code> object is placed under <code>this.props.navigator</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>          <code class="nx">props</code><code class="p">.</code><code class="nx">navigator</code> <code class="o">=</code> <code class="nx">navigator</code>
+<code class="lineno">2 </code>          <code class="nx">props</code><code class="p">.</code><code class="nx">name</code> <code class="o">=</code> <code class="nx">route</code><code class="p">.</code><code class="nx">name</code>
+</pre></div>
+
+</figure>
+
+<p>After we’ve added <code>navigator</code> and <code>name</code>, the <code>props</code> object is ready for rendering:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>          <code class="k">return</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createElement</code><code class="p">(</code><code class="nx">route</code><code class="p">.</code><code class="nx">component</code><code class="p">,</code> <code class="nx">props</code><code class="p">)</code>
+</pre></div>
+
+</figure>
+
+<p>And then, let’s close all the parentheses and tags:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="p">}}</code>
+<code class="lineno">2 </code>      <code class="o">/&gt;</code>
+<code class="lineno">3 </code>    <code class="p">)</code>
+<code class="lineno">4 </code>  <code class="p">}</code>
+<code class="lineno">5 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>We are done with most of the heavy lifting. If you opted not to implement the navigation bar, you can skip <code>NavigationBarRouteMapper</code>. If you want to use the bar, this is how you can implement it.</p>
+
+<p>The route mapper must have certain methods: <code>LeftButton</code>, <code>RightButton</code>, and <code>Title</code>. This pattern was inspired by <a href="https://github.com/facebook/react-native/blob/master/Examples/UIExplorer/Navigator/NavigationBarSample.js">the official React navigation bar example</a>. The first method checks whether this is the initial route or not with the <code>index == 0</code> condition. Alternatively, we can check for the name of the scene, such as <code>name == 'Search'</code>.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kd">var</code> <code class="nx">NavigationBarRouteMapper</code> <code class="o">=</code> <code class="p">{</code>
+<code class="lineno">2 </code>  <code class="nx">LeftButton</code><code class="p">(</code><code class="nx">route</code><code class="p">,</code> <code class="nx">navigator</code><code class="p">,</code> <code class="nx">index</code><code class="p">,</code> <code class="nx">navState</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">3 </code>    <code class="k">if</code> <code class="p">(</code><code class="nx">index</code> <code class="o">==</code> <code class="mi">0</code><code class="p">)</code> <code class="k">return</code> <code class="kc">null</code>
+</pre></div>
+
+</figure>
+
+<p>If we pass the first statement, we are on the Forecast. Set the previous route (Search):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>    <code class="kd">var</code> <code class="nx">previousRoute</code> <code class="o">=</code> <code class="nx">navState</code><code class="p">.</code><code class="nx">routeStack</code><code class="p">[</code><code class="nx">index</code> <code class="o">-</code> <code class="mi">1</code><code class="p">]</code>
+</pre></div>
+
+</figure>
+
+<p>Now, return the button, which is a <code>TouchableOpacity</code> component with <code>Text</code> in it. I use angle brackets with the previous route’s name as the button label, as shown in Figure 12. You can use Next or something else. This <code>Navigator</code> component is highly customizable. Most likely, you’d have some nicely designed images as well.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-weather-3.png" alt="Figure 12: Navigator menu" />
+  <figcaption>Figure 12: Navigator menu</figcaption>
+</figure>
+
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno">2 </code>      <code class="o">&lt;</code><code class="nx">TouchableOpacity</code>
+</pre></div>
+
+</figure>
+
+<p>The event handler uses the <code>pop()</code> method. Similar to <code>Array.pop()</code>, it removes the last element from a stack/array. The last element is the current screen, so we revert back to the previous route:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="nx">onPress</code><code class="o">=</code><code class="p">{()</code> <code class="o">=&gt;</code> <code class="nx">navigator</code><code class="p">.</code><code class="nx">pop</code><code class="p">()}</code>
+<code class="lineno">2 </code>        <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">navBarLeftButton</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno">3 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{[</code><code class="nx">styles</code><code class="p">.</code><code class="nx">navBarText</code><code class="p">,</code> <code class="nx">styles</code><code class="p">.</code><code class="nx">navBarButtonText</code> <code class="p">]}</code><code class="o">&gt;</code>
+<code class="lineno">4 </code>          <code class="p">{</code><code class="s1">'&lt;'</code><code class="p">}</code> <code class="p">{</code><code class="nx">previousRoute</code><code class="p">.</code><code class="nx">name</code><code class="p">}</code>
+<code class="lineno">5 </code>        <code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">6 </code>      <code class="o">&lt;</code><code class="err">/TouchableOpacity&gt;</code>
+<code class="lineno">7 </code>    <code class="p">)</code>
+<code class="lineno">8 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>We don’t need the right button in this project, but if you need it, you can implement it analogously to the left button. You might want to use a list of routes, such that you know which one is the next one based on the index of the current route.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="nx">RightButton</code><code class="p">(</code><code class="nx">route</code><code class="p">,</code> <code class="nx">navigator</code><code class="p">,</code> <code class="nx">index</code><code class="p">,</code> <code class="nx">navState</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">2 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno">3 </code>      <code class="o">&lt;</code><code class="nx">View</code><code class="o">/&gt;</code>
+<code class="lineno">4 </code>    <code class="p">)</code>
+<code class="lineno">5 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>The last method is straightforward. We render the name of the route as the title. You can use the <code>title</code> property instead of <code>name</code> if you wish; just don’t forget to update it everywhere (that is, in <code>initialRoute</code>, <code>renderScene</code>, and <code>push()</code> in <code>Search</code>).</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="nx">Title</code><code class="p">(</code><code class="nx">route</code><code class="p">,</code> <code class="nx">navigator</code><code class="p">,</code> <code class="nx">index</code><code class="p">,</code> <code class="nx">navState</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">2 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno">3 </code>      <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{[</code><code class="nx">styles</code><code class="p">.</code><code class="nx">navBarText</code><code class="p">,</code> <code class="nx">styles</code><code class="p">.</code><code class="nx">navBarTitleText</code><code class="p">]}</code><code class="o">&gt;</code>
+<code class="lineno">4 </code>        <code class="p">{</code><code class="nx">route</code><code class="p">.</code><code class="nx">name</code><code class="p">}</code>
+<code class="lineno">5 </code>      <code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">6 </code>    <code class="p">)</code>
+<code class="lineno">7 </code>  <code class="p">}</code>
+<code class="lineno">8 </code><code class="p">}</code>
+</pre></div>
+
+</figure>
+
+<p>Lastly, the styles! They are easy to read. One new addition is <code>PixelRatio</code>. It will give us the ratio of pixels so we can control the values on a lower level:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">styles</code> <code class="o">=</code> <code class="nx">StyleSheet</code><code class="p">.</code><code class="nx">create</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">navBar</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="nx">backgroundColor</code><code class="o">:</code> <code class="s1">'white'</code><code class="p">,</code>
+<code class="lineno"> 4 </code>    <code class="nx">borderBottomWidth</code><code class="o">:</code> <code class="mi">1</code> <code class="o">/</code> <code class="nx">PixelRatio</code><code class="p">.</code><code class="nx">get</code><code class="p">(),</code>
+<code class="lineno"> 5 </code>    <code class="nx">borderBottomColor</code><code class="o">:</code> <code class="s1">'#CDCDCD'</code>
+<code class="lineno"> 6 </code>  <code class="p">},</code>
+<code class="lineno"> 7 </code>  <code class="nx">navBarText</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 8 </code>    <code class="nx">fontSize</code><code class="o">:</code> <code class="mi">16</code><code class="p">,</code>
+<code class="lineno"> 9 </code>    <code class="nx">marginVertical</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">10 </code>  <code class="p">},</code>
+<code class="lineno">11 </code>  <code class="nx">navBarTitleText</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">12 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'blue'</code><code class="p">,</code>
+<code class="lineno">13 </code>    <code class="nx">fontWeight</code><code class="o">:</code> <code class="s1">'500'</code><code class="p">,</code>
+<code class="lineno">14 </code>    <code class="nx">marginVertical</code><code class="o">:</code> <code class="mi">9</code><code class="p">,</code>
+<code class="lineno">15 </code>  <code class="p">},</code>
+<code class="lineno">16 </code>  <code class="nx">navBarLeftButton</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">17 </code>    <code class="nx">paddingLeft</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">18 </code>  <code class="p">},</code>
+<code class="lineno">19 </code>  <code class="nx">navBarRightButton</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">20 </code>    <code class="nx">paddingRight</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">21 </code>  <code class="p">},</code>
+<code class="lineno">22 </code>  <code class="nx">navBarButtonText</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">23 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'black'</code>
+<code class="lineno">24 </code>  <code class="p">}</code>
+<code class="lineno">25 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>Change the weather component to <code>App</code> in the register call:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="nx">AppRegistry</code><code class="p">.</code><code class="nx">registerComponent</code><code class="p">(</code><code class="s1">'weather'</code><code class="p">,</code> <code class="p">()</code> <code class="o">=&gt;</code> <code class="nx">App</code><code class="p">)</code>
+</pre></div>
+
+</figure>
+
+<p>We are done with one file, and we have two more to go. Moving in the logical sequence of the app flow, we continue with search.ios.js by importing the objects:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="s1">'use strict'</code>
+<code class="lineno"> 2 </code>
+<code class="lineno"> 3 </code><code class="kd">var</code> <code class="nx">React</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'react-native'</code><code class="p">)</code>
+<code class="lineno"> 4 </code><code class="kr">const</code> <code class="nx">Forecast</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'./forecast.ios'</code><code class="p">)</code>
+<code class="lineno"> 5 </code>
+<code class="lineno"> 6 </code><code class="kd">var</code> <code class="p">{</code>
+<code class="lineno"> 7 </code>  <code class="nx">StyleSheet</code><code class="p">,</code>
+<code class="lineno"> 8 </code>  <code class="nx">Text</code><code class="p">,</code>
+<code class="lineno"> 9 </code>  <code class="nx">TextInput</code><code class="p">,</code>
+<code class="lineno">10 </code>  <code class="nx">View</code><code class="p">,</code>
+<code class="lineno">11 </code>  <code class="nx">Switch</code><code class="p">,</code>
+<code class="lineno">12 </code>  <code class="nx">TouchableHighlight</code><code class="p">,</code>
+<code class="lineno">13 </code>  <code class="nx">ListView</code><code class="p">,</code>
+<code class="lineno">14 </code>  <code class="nx">Alert</code>
+<code class="lineno">15 </code><code class="p">}</code> <code class="o">=</code> <code class="nx">React</code>
+</pre></div>
+
+</figure>
+
+<p>Next, we want to declare the OpenWeatherMap API key, which you can get from their website after registering as a developer. Pick the free plan unless you’re sure your app will hit the limits when it becomes number one on iTunes (or is it the App Store?). Refrain from using my keys, and get your own:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kr">const</code> <code class="nx">openWeatherAppId</code> <code class="o">=</code> <code class="s1">'2de143494c0b295cca9337e1e96b00e0'</code><code class="p">,</code> 
+<code class="lineno">2 </code>  <code class="c1">// This is Azat's key. Get your own!</code>
+</pre></div>
+
+</figure>
+
+<p>In the event that OpenWeatherMap changes the response format or if you want to develop offline (as I do), keep the real URL commented and use the local version (<code>weather-api.js</code> Node.js server):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="c1">// openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast' // Real \</code>
+<code class="lineno">2 </code><code class="nx">API</code>
+<code class="lineno">3 </code>  <code class="nx">openWeatherUrl</code> <code class="o">=</code> <code class="s1">'http://localhost:3000/'</code> <code class="c1">// Mock API, start with $ node weath\</code>
+<code class="lineno">4 </code><code class="nx">er</code><code class="o">-</code><code class="nx">api</code>
+</pre></div>
+
+</figure>
+
+<p>Because this file is imported by <code>index.ios.js</code>, we need to export the needed component. You can create another variable/object, but I just assign the component to <code>module.exports</code> for eloquence:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="k">module</code>.<code class="n">exports</code> = <code class="n">React</code>.<code class="n">createClass</code>({
+<code class="lineno">2 </code>  <code class="n">getInitialState</code>() {
+</pre></div>
+
+</figure>
+
+<p>When we get the initial state, we want to check if the city name was saved. If it was, then we’ll use that name and set <code>isRemember</code> to <code>true</code>, because the city name was remembered in the previous use:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>    <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">storage</code><code class="p">.</code><code class="nx">getFromStorage</code><code class="p">(</code><code class="s1">'cityName'</code><code class="p">,</code> <code class="p">(</code><code class="nx">cityName</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno">2 </code>      <code class="k">if</code> <code class="p">(</code><code class="nx">cityName</code><code class="p">)</code> <code class="k">this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code><code class="nx">cityName</code><code class="o">:</code> <code class="nx">cityName</code><code class="p">,</code> <code class="nx">isRemember</code><code class="o">:</code> <code class="kc">true</code><code class="p">})</code>
+<code class="lineno">3 </code>    <code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>While we wait for the asynchronous callback with the city name to be executed by the storage API, we set the value to none:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>    <code class="k">return</code> <code class="p">({</code><code class="nx">isRemember</code><code class="o">:</code> <code class="kc">false</code><code class="p">,</code> <code class="nx">cityName</code><code class="o">:</code> <code class="s1">''</code><code class="p">})</code>
+<code class="lineno">2 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>Next, we handle the switch by setting the state of <code>isRemember</code>, because it’s a controlled component:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  toggleRemember() {
+<code class="lineno">2 </code>    console.log('toggle: ', this.state.isRemember)
+<code class="lineno">3 </code>    this.setState({ isRemember: !this.state.isRemember}, ()=&gt;{
+</pre></div>
+
+</figure>
+
+<p>If you remember from previous chapters (I know, it was so long ago!), <code>setState()</code> is actually asynchronous. We want to remove the city name if the Remember? toggle is off, so we need to implement <code>removeItem()</code> in the callback of <code>setState()</code>, and not just on the next line (we might have a race condition and the state will be old if we don’t use a callback):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>      <code class="k">if</code> <code class="p">(</code><code class="o">!</code><code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">isRemember</code><code class="p">)</code> <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">storage</code><code class="p">.</code><code class="nx">removeItem</code><code class="p">(</code><code class="s1">'cityName'</code><code class="p">)</code>
+<code class="lineno">2 </code>    <code class="p">})</code>
+<code class="lineno">3 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>On every change of the city name <code>TextInput</code>, we update the state. This is the handler for <code>onChangeText</code>, so we get the value as an argument, not the event:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="nx">handleCityName</code><code class="p">(</code><code class="nx">cityName</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">2 </code>    <code class="k">this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code> <code class="nx">cityName</code><code class="o">:</code> <code class="nx">cityName</code><code class="p">})</code>
+<code class="lineno">3 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>search()</code> method is triggered by the Search button and the virtual keyboard’s “enter.” First, we define the states as local variables to eliminate unnecessary typing:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="nx">search</code><code class="p">(</code><code class="nx">event</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">2 </code>    <code class="kd">let</code> <code class="nx">cityName</code> <code class="o">=</code> <code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">cityName</code><code class="p">,</code>
+<code class="lineno">3 </code>      <code class="nx">isRemember</code> <code class="o">=</code> <code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">isRemember</code>
+</pre></div>
+
+</figure>
+
+<p>It’s good to check that the city name is not empty. There’s a cross-platform component <code>Alert</code> for that:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>    <code class="k">if</code> <code class="p">(</code><code class="o">!</code><code class="nx">cityName</code><code class="p">)</code> <code class="k">return</code> <code class="nx">Alert</code><code class="p">.</code><code class="nx">alert</code><code class="p">(</code><code class="s1">'No City Name'</code><code class="p">,</code>
+<code class="lineno">2 </code>      <code class="s1">'Please enter city name'</code><code class="p">,</code>
+<code class="lineno">3 </code>      <code class="p">[{</code><code class="nx">text</code><code class="o">:</code> <code class="s1">'OK'</code><code class="p">,</code> <code class="nx">onPress</code><code class="o">:</code> <code class="p">()</code> <code class="o">=&gt;</code> <code class="nx">console</code><code class="p">.</code><code class="nx">log</code><code class="p">(</code><code class="s1">'OK Pressed!'</code><code class="p">)}]</code>
+<code class="lineno">4 </code>    <code class="p">)</code>
+</pre></div>
+
+</figure>
+
+<p>The most interesting piece of logic in the entire app is how we make the external call. The answer is easy. We’ll use the new <code>fetch</code> API, which is already part of Chrome. We don’t care about Chrome right now too much; all we need to know is that React Native supports it. In this example, I resorted to the ES6 string interpolation (a.k.a. string template) to construct the URL. If you’re using the local server, the response will be the same (<code>response.json</code>), so the URL doesn’t matter.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>    fetch(`<code class="cp">${</code><code class="n">openWeatherUrl</code><code class="cp">}</code>/?appid=<code class="cp">${</code><code class="n">openWeatherAppId</code><code class="cp">}</code><code class="err">&amp;</code>q=<code class="cp">${</code><code class="n">cityName</code><code class="cp">}</code><code class="err">&amp;</code>units=metr\
+<code class="lineno">2 </code>ic`, {
+<code class="lineno">3 </code>      method: 'GET'
+<code class="lineno">4 </code>    }).then((response) =&gt; response.json())
+<code class="lineno">5 </code>      .then((response) =&gt; {
+</pre></div>
+
+</figure>
+
+<p>Once we get the data, we want to store the city name. Maybe you want to do it before making the <code>fetch</code> call. It’s up to you.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="k">if</code> <code class="p">(</code><code class="nx">isRemember</code><code class="p">)</code> <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">storage</code><code class="p">.</code><code class="nx">setInStorage</code><code class="p">(</code><code class="s1">'cityName'</code><code class="p">,</code> <code class="nx">cityName</code><code class="p">)</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>ListView</code> will render the grid, but it needs a special object data source. Create it like this:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="kd">let</code> <code class="nx">dataSource</code> <code class="o">=</code> <code class="k">new</code> <code class="nx">ListView</code><code class="p">.</code><code class="nx">DataSource</code><code class="p">({</code>
+<code class="lineno">2 </code>          <code class="nx">rowHasChanged</code><code class="o">:</code> <code class="p">(</code><code class="nx">row1</code><code class="p">,</code> <code class="nx">row2</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="nx">row1</code> <code class="o">!==</code> <code class="nx">row2</code>
+<code class="lineno">3 </code>        <code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>Everything is ready to render the forecast. Use the <code>Navigator</code> object by invoking <code>push()</code> and passing all the necessary properties:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">navigator</code><code class="p">.</code><code class="nx">push</code><code class="p">({</code>
+<code class="lineno">2 </code>          <code class="nx">name</code><code class="o">:</code> <code class="s1">'Forecast'</code><code class="p">,</code>
+<code class="lineno">3 </code>          <code class="nx">component</code><code class="o">:</code> <code class="nx">Forecast</code><code class="p">,</code>
+</pre></div>
+
+</figure>
+
+<p><code>passProps</code> is an arbitrary name. I followed the <code>NavigatorIOS</code> syntax here. You can pick another name. For the <code>ListView</code>, we populate the rows from the JavaScript/Node array with <code>cloneWithRows()</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>          <code class="nx">passProps</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 2 </code>            <code class="nx">forecastData</code><code class="o">:</code> <code class="nx">dataSource</code><code class="p">.</code><code class="nx">cloneWithRows</code><code class="p">(</code><code class="nx">response</code><code class="p">.</code><code class="nx">list</code><code class="p">),</code>
+<code class="lineno"> 3 </code>            <code class="nx">forecastRaw</code><code class="o">:</code> <code class="nx">response</code>
+<code class="lineno"> 4 </code>          <code class="p">}</code>
+<code class="lineno"> 5 </code>        <code class="p">})</code>
+<code class="lineno"> 6 </code>      <code class="p">})</code>
+<code class="lineno"> 7 </code>      <code class="p">.</code><code class="k">catch</code><code class="p">((</code><code class="nx">error</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno"> 8 </code>        <code class="nx">console</code><code class="p">.</code><code class="nx">warn</code><code class="p">(</code><code class="nx">error</code><code class="p">)</code>
+<code class="lineno"> 9 </code>      <code class="p">})</code>
+<code class="lineno">10 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>We are done with the methods of <code>Search</code>. Now we can render the elements:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  render: function() {
+<code class="lineno">2 </code>    return (
+<code class="lineno">3 </code>      <code class="p">&lt;</code><code class="nt">View</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.container}</code><code class="p">&gt;</code>
+<code class="lineno">4 </code>        <code class="p">&lt;</code><code class="nt">Text</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.welcome}</code><code class="p">&gt;</code>
+<code class="lineno">5 </code>          Welcome to Weather App, React Quickly project
+<code class="lineno">6 </code>        <code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+<code class="lineno">7 </code>        <code class="p">&lt;</code><code class="nt">Text</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.instructions}</code><code class="p">&gt;</code>
+<code class="lineno">8 </code>          Enter your city name:
+<code class="lineno">9 </code>        <code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+</pre></div>
+
+</figure>
+
+<p>The next element is a <code>TextInput</code> for the city name. It has two callbacks, <code>onChangeText</code>, which triggers <code>handleCityName</code>, and <code>onEndEditing</code>, which calls <code>search</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="p">&lt;</code><code class="nt">TextInput</code>
+<code class="lineno">2 </code>          <code class="na">placeholder</code><code class="o">=</code><code class="s">"San Francisco"</code>
+<code class="lineno">3 </code>          <code class="na">value</code><code class="o">=</code><code class="s">{this.state.cityName}</code>
+<code class="lineno">4 </code>          <code class="na">returnKeyType</code><code class="o">=</code><code class="s">"search"</code>
+<code class="lineno">5 </code>          <code class="na">enablesReturnKeyAutomatically</code><code class="o">=</code><code class="s">{true}</code>
+<code class="lineno">6 </code>          <code class="na">onChangeText</code><code class="o">=</code><code class="s">{this.handleCityName}</code>
+<code class="lineno">7 </code>          <code class="na">onEndEditing</code><code class="o">=</code><code class="s">{this.search}</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.textInput}/</code><code class="p">&gt;</code>
+</pre></div>
+
+</figure>
+
+<p>The last few elements are the label for the switch, the switch itself, and the Search button:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>        <code class="p">&lt;</code><code class="nt">Text</code><code class="p">&gt;</code>Remember?<code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+<code class="lineno"> 2 </code>        <code class="p">&lt;</code><code class="nt">Switch</code> <code class="na">onValueChange</code><code class="o">=</code><code class="s">{this.toggleRemember}</code> <code class="na">value</code><code class="o">=</code><code class="s">{this.state.isRemember\</code>
+<code class="lineno"> 3 </code><code class="err">}</code><code class="p">&gt;&lt;/</code><code class="nt">Switch</code><code class="p">&gt;</code>
+<code class="lineno"> 4 </code>        <code class="p">&lt;</code><code class="nt">TouchableHighlight</code> <code class="na">onPress</code><code class="o">=</code><code class="s">{this.search}</code><code class="p">&gt;</code>
+<code class="lineno"> 5 </code>          <code class="p">&lt;</code><code class="nt">Text</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.button}</code><code class="p">&gt;</code>Search<code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+<code class="lineno"> 6 </code>        <code class="p">&lt;/</code><code class="nt">TouchableHighlight</code><code class="p">&gt;</code>
+<code class="lineno"> 7 </code>      <code class="p">&lt;/</code><code class="nt">View</code><code class="p">&gt;</code>
+<code class="lineno"> 8 </code>    )
+<code class="lineno"> 9 </code>  }
+<code class="lineno">10 </code>})
+</pre></div>
+
+</figure>
+
+<p>And of course the styles—without them, the layout and fonts will be all skewed. The properties are self-explanatory for the most part, so we won’t go into detail on them.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">styles</code> <code class="o">=</code> <code class="nx">StyleSheet</code><code class="p">.</code><code class="nx">create</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">navigatorContainer</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code>
+<code class="lineno"> 4 </code>  <code class="p">},</code>
+<code class="lineno"> 5 </code>  <code class="nx">container</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 6 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno"> 7 </code>    <code class="nx">justifyContent</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno"> 8 </code>    <code class="nx">alignItems</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno"> 9 </code>    <code class="nx">backgroundColor</code><code class="o">:</code> <code class="s1">'#F5FCFF'</code><code class="p">,</code>
+<code class="lineno">10 </code>  <code class="p">},</code>
+<code class="lineno">11 </code>  <code class="nx">welcome</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">12 </code>    <code class="nx">fontSize</code><code class="o">:</code> <code class="mi">20</code><code class="p">,</code>
+<code class="lineno">13 </code>    <code class="nx">textAlign</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno">14 </code>    <code class="nx">margin</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">15 </code>  <code class="p">},</code>
+<code class="lineno">16 </code>  <code class="nx">instructions</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">17 </code>    <code class="nx">textAlign</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno">18 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'#333333'</code><code class="p">,</code>
+<code class="lineno">19 </code>    <code class="nx">marginBottom</code><code class="o">:</code> <code class="mi">5</code><code class="p">,</code>
+<code class="lineno">20 </code>  <code class="p">},</code>
+<code class="lineno">21 </code>  <code class="nx">textInput</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">22 </code>    <code class="nx">borderColor</code><code class="o">:</code> <code class="s1">'#8E8E93'</code><code class="p">,</code>
+<code class="lineno">23 </code>    <code class="nx">borderWidth</code><code class="o">:</code> <code class="mf">0.5</code><code class="p">,</code>
+<code class="lineno">24 </code>    <code class="nx">backgroundColor</code><code class="o">:</code> <code class="s1">'#fff'</code><code class="p">,</code>
+<code class="lineno">25 </code>    <code class="nx">height</code><code class="o">:</code> <code class="mi">40</code><code class="p">,</code>
+<code class="lineno">26 </code>    <code class="nx">marginLeft</code><code class="o">:</code> <code class="mi">60</code><code class="p">,</code>
+<code class="lineno">27 </code>    <code class="nx">marginRight</code><code class="o">:</code> <code class="mi">60</code><code class="p">,</code>
+<code class="lineno">28 </code>    <code class="nx">padding</code><code class="o">:</code> <code class="mi">8</code><code class="p">,</code>
+<code class="lineno">29 </code>  <code class="p">},</code>
+<code class="lineno">30 </code>  <code class="nx">button</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">31 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'#111'</code><code class="p">,</code>
+<code class="lineno">32 </code>    <code class="nx">marginBottom</code><code class="o">:</code> <code class="mi">15</code><code class="p">,</code>
+<code class="lineno">33 </code>    <code class="nx">borderWidth</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno">34 </code>    <code class="nx">borderColor</code><code class="o">:</code> <code class="s1">'blue'</code><code class="p">,</code>
+<code class="lineno">35 </code>    <code class="nx">padding</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">36 </code>  	<code class="nx">borderRadius</code><code class="o">:</code> <code class="mi">20</code><code class="p">,</code>
+<code class="lineno">37 </code>    <code class="nx">fontWeight</code><code class="o">:</code> <code class="s1">'600'</code><code class="p">,</code>
+<code class="lineno">38 </code>    <code class="nx">marginTop</code><code class="o">:</code> <code class="mi">30</code>
+<code class="lineno">39 </code>  <code class="p">}</code>
+<code class="lineno">40 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>So, we invoke the <code>push()</code> method from the <code>Search</code> component when we press Search. This will trigger an event in the <code>Navigator</code> element: namely <code>renderScene</code>, which renders the forecast. Let’s implement it. I promise, we are almost done!</p>
+
+<p>The forecast.ios.js file starts with importations. By now, if this is unfamiliar to you, I am powerless.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="s1">'use strict'</code>
+<code class="lineno"> 2 </code>
+<code class="lineno"> 3 </code><code class="kd">var</code> <code class="nx">React</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'react-native'</code><code class="p">)</code>
+<code class="lineno"> 4 </code><code class="kd">var</code> <code class="p">{</code>
+<code class="lineno"> 5 </code>  <code class="nx">StyleSheet</code><code class="p">,</code>
+<code class="lineno"> 6 </code>  <code class="nx">Text</code><code class="p">,</code>
+<code class="lineno"> 7 </code>  <code class="nx">TextInput</code><code class="p">,</code>
+<code class="lineno"> 8 </code>  <code class="nx">View</code><code class="p">,</code>
+<code class="lineno"> 9 </code>  <code class="nx">ListView</code><code class="p">,</code>
+<code class="lineno">10 </code>  <code class="nx">ScrollView</code>
+<code class="lineno">11 </code><code class="p">}</code> <code class="o">=</code> <code class="nx">React</code>
+</pre></div>
+
+</figure>
+
+<p>I wrote this function, mostly for Americans, to calculate F from C . It’s probably not very precise, but it’ll do for now:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kr">const</code> <code class="nx">fToC</code> <code class="o">=</code> <code class="p">(</code><code class="nx">f</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno">2 </code>  <code class="k">return</code> <code class="nb">Math</code><code class="p">.</code><code class="nx">round</code><code class="p">((</code><code class="nx">f</code> <code class="o">-</code> <code class="mf">31.996</code><code class="p">)</code><code class="o">*</code><code class="mi">100</code><code class="o">/</code><code class="mf">1.8</code><code class="p">)</code><code class="o">/</code><code class="mi">100</code>
+<code class="lineno">3 </code><code class="p">}</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>ForecastRow</code> component is stateless (more on stateless components in chapter 10). Its sole purpose is to render a single forecast item:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kr">const</code> <code class="nx">ForecastRow</code> <code class="o">=</code> <code class="p">(</code><code class="nx">forecast</code><code class="p">)</code><code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno">2 </code>  <code class="k">return</code> <code class="p">(</code>
+<code class="lineno">3 </code>    <code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">row</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno">4 </code>      <code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">rightContainer</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno">5 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">subtitle</code><code class="p">}</code><code class="o">&gt;&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">6 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">subtitle</code><code class="p">}</code><code class="o">&gt;</code>
+</pre></div>
+
+</figure>
+
+<p>In the row, we output the date (<code>dt_txt</code>), description (rainy or sunny), and temperatures in C and F (figure 9-X). The latter is achieved by invoking the <code>fToC</code> function defined earlier in this file:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>          <code class="p">{</code><code class="nx">forecast</code><code class="p">.</code><code class="nx">dt_txt</code><code class="p">}</code><code class="o">:</code> <code class="p">{</code><code class="nx">forecast</code><code class="p">.</code><code class="nx">weather</code><code class="p">[</code><code class="mi">0</code><code class="p">].</code><code class="nx">description</code><code class="p">},</code> <code class="p">{</code><code class="nx">forecast</code><code class="p">.</code><code class="nx">main</code><code class="p">.</code><code class="nx">t</code><code class="o">\</code>
+<code class="lineno">2 </code><code class="nx">emp</code><code class="p">}</code><code class="nx">C</code><code class="o">/</code><code class="p">{</code><code class="nx">fToC</code><code class="p">(</code><code class="nx">forecast</code><code class="p">.</code><code class="nx">main</code><code class="p">.</code><code class="nx">temp</code><code class="p">)}</code><code class="nx">F</code>
+<code class="lineno">3 </code>        <code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">4 </code>       <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">5 </code>    <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">6 </code>  <code class="p">)</code>
+<code class="lineno">7 </code><code class="p">}</code>
+</pre></div>
+
+</figure>
+
+<p>The result will look as shown in figure 9-X.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-weather-5.png" alt="alt text needed" />
+  <figcaption>alt text needed</figcaption>
+</figure>
+
+
+<p>Next, we export the <code>Forecast</code> component, which is a <code>ScrollView</code> with <code>Text</code> and a <code>ListView</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>module.exports = React.createClass({
+<code class="lineno">2 </code>  render: function() {
+<code class="lineno">3 </code>    return (
+<code class="lineno">4 </code>      <code class="p">&lt;</code><code class="nt">ScrollView</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.scroll}</code><code class="p">&gt;</code>
+<code class="lineno">5 </code>        <code class="p">&lt;</code><code class="nt">Text</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.text}</code><code class="p">&gt;</code>{this.props.forecastRaw.city.name}<code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>ListView</code> takes <code>dataSource</code> and <code>renderRow</code> properties to render the grid. The data source must be of a special type. It cannot be a plain JavaScript/Node array:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="p">&lt;</code><code class="nt">ListView</code> <code class="na">dataSource</code><code class="o">=</code><code class="s">{this.props.forecastData}</code> <code class="na">renderRow</code><code class="o">=</code><code class="s">{ForecastRow}</code> <code class="na">s</code><code class="err">\</code>
+<code class="lineno">2 </code><code class="na">tyle</code><code class="o">=</code><code class="s">{styles.listView}/</code><code class="p">&gt;</code>
+<code class="lineno">3 </code>      <code class="p">&lt;/</code><code class="nt">ScrollView</code><code class="p">&gt;</code>
+<code class="lineno">4 </code>    )
+<code class="lineno">5 </code>  }
+<code class="lineno">6 </code>})
+</pre></div>
+
+</figure>
+
+<p>And the styles. Tadaah!</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">styles</code> <code class="o">=</code> <code class="nx">StyleSheet</code><code class="p">.</code><code class="nx">create</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">listView</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="nx">marginTop</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno"> 4 </code>  <code class="p">},</code>
+<code class="lineno"> 5 </code>  <code class="nx">row</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 6 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno"> 7 </code>    <code class="nx">flexDirection</code><code class="o">:</code> <code class="s1">'row'</code><code class="p">,</code>
+<code class="lineno"> 8 </code>    <code class="nx">justifyContent</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno"> 9 </code>    <code class="nx">alignItems</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno">10 </code>    <code class="nx">backgroundColor</code><code class="o">:</code> <code class="s1">'#5AC8FA'</code><code class="p">,</code>
+<code class="lineno">11 </code>    <code class="nx">paddingRight</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">12 </code>    <code class="nx">paddingLeft</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">13 </code>    <code class="nx">marginTop</code><code class="o">:</code> <code class="mi">1</code>
+<code class="lineno">14 </code>  <code class="p">},</code>
+<code class="lineno">15 </code>  <code class="nx">rightContainer</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">16 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code>
+<code class="lineno">17 </code>  <code class="p">},</code>
+<code class="lineno">18 </code>  <code class="nx">scroll</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">19 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno">20 </code>    <code class="nx">padding</code><code class="o">:</code> <code class="mi">5</code>
+<code class="lineno">21 </code>  <code class="p">},</code>
+<code class="lineno">22 </code>  <code class="nx">text</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">23 </code>    <code class="nx">marginTop</code><code class="o">:</code> <code class="mi">80</code><code class="p">,</code>
+<code class="lineno">24 </code>    <code class="nx">fontSize</code><code class="o">:</code> <code class="mi">40</code>
+<code class="lineno">25 </code>  <code class="p">},</code>
+<code class="lineno">26 </code>  <code class="nx">subtitle</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">27 </code>    <code class="nx">fontSize</code><code class="o">:</code> <code class="mi">16</code><code class="p">,</code>
+<code class="lineno">28 </code>    <code class="nx">fontWeight</code><code class="o">:</code> <code class="s1">'normal'</code><code class="p">,</code>
+<code class="lineno">29 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'#fff'</code>
+<code class="lineno">30 </code>  <code class="p">}</code>
+<code class="lineno">31 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>The last final touch is if you’re working offline and using a local URL. There are two files you need to have:</p>
+
+<ol class="numeric">
+  <li>response.json—Response to the real API call for London</li>
+  <li>weather-api.js—Ultra-minimalistic Node web server that takes response.json and serves it to a client</li>
+</ol>
+
+<p>Go ahead and copy <code>response.json</code> from <a href="https://github.com/azat-co/react-native-quickly/blob/master/weather/response.json">GitHub</a>. Then implement this Node.js server using only the core modules (I love <a href="http://proexpressjs.com">Express</a> or Swagger, but using them here is an overkill):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kd">var</code> <code class="nx">http</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'http'</code><code class="p">),</code>
+<code class="lineno">2 </code>  <code class="nx">forecastData</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'./response.json'</code><code class="p">)</code>
+<code class="lineno">3 </code>
+<code class="lineno">4 </code><code class="nx">http</code><code class="p">.</code><code class="nx">createServer</code><code class="p">(</code><code class="kd">function</code><code class="p">(</code><code class="nx">request</code><code class="p">,</code> <code class="nx">response</code><code class="p">){</code>
+<code class="lineno">5 </code>  <code class="nx">response</code><code class="p">.</code><code class="nx">end</code><code class="p">(</code><code class="nx">JSON</code><code class="p">.</code><code class="nx">stringify</code><code class="p">(</code><code class="nx">forecastData</code><code class="p">))</code>
+<code class="lineno">6 </code><code class="p">}).</code><code class="nx">listen</code><code class="p">(</code><code class="mi">3000</code><code class="p">)</code>
+</pre></div>
+
+</figure>
+
+<p>Start the server with <code>$ node weather-api</code>, bundle the React Native code with <code>$ react-native start</code>, and reload the Simulator. The bundler and the server must be running together, so you might need to open a new tab or a window in your terminal app/iTerm.</p>
+
+<p>Note: if you get an “Invariant Violation: Callback with id 1-5” error, make sure you don’t have the Chrome debugger opened more than once.</p>
+
+<p>You should see an empty city name field. That’s okay, because this is the first time you’ve launched the app. I intentionally left the logs in the storage implementation. You should see the following when you open DevTools in the Chrome tab for debugging React Native (it typically opens automatically once you enable it by going to Hardware-&gt;Shake Gestures-&gt;Debug in Chrome—not that you are going to shake your laptop!):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>AsyncStorage GET for cityName: "null"
+</pre></div>
+
+</figure>
+
+<p>Play with the toggle, enter a name (Figure 13), and get the weather report. The app is done. Boom! Now put some nice UI on it and ship it!</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-weather-4.png" alt="Figure 13: By using storage, developers can save city name" />
+  <figcaption>Figure 13: By using storage, developers can save city name</figcaption>
+</figure>
+
+
+
+</div>
+</body>
+</html>

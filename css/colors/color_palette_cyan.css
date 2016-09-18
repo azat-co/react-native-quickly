@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Cyan
+
+background_solid    { background: #00838f; }
+button              { background: #00bcd4; }
+button_hover        { background: #00c6e0; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #00bcd4;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #00c6e0;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #00bcd4;
+    -webkit-box-shadow: 0 1px 0 0 #00bcd4;
+    -moz-box-shadow: 0 1px 0 0 #00bcd4;
+    box-shadow: 0 1px 0 0 #00bcd4; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #00838f;
+}
+
+a {
+	color:#03a9f4
+}

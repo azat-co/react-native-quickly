@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Lime
+
+background_solid    { background: #afb42b; }
+button              { background: #cddc39; }
+button_hover        { background: #d7e83c; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #cddc39;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #d7e83c;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #cddc39;
+    -webkit-box-shadow: 0 1px 0 0 #cddc39;
+    -moz-box-shadow: 0 1px 0 0 #cddc39;
+    box-shadow: 0 1px 0 0 #cddc39; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #afb42b;
+}
+
+a {
+	color:#cddc39
+}

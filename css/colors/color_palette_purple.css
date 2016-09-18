@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Purple
+
+background_solid    { background: #6a1b9a; }
+button              { background: #9C27B0; }
+button_hover        { background: #a72abd; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #9C27B0;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #a72abd;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #9C27B0;
+    -webkit-box-shadow: 0 1px 0 0 #9C27B0;
+    -moz-box-shadow: 0 1px 0 0 #9C27B0;
+    box-shadow: 0 1px 0 0 #9C27B0; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #6a1b9a;
+}
+
+a {
+	color:#9C27B0
+}

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Styles and Flexbox</title>
+<link href="stylesheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body dir="ltr" class="kramdown">
+<div id="leanpub-toc">
+<h2></h2>
+<ol class="toc">
+<ul class='toc no-parts'>
+  <li>
+    <a href='chap01.html#leanpub-auto-why-react-native-is-awesome'>Why React Native is Awesome</a>
+  </li>
+  <li>
+    <a href='chap02.html#leanpub-auto-setting-up-react-native-development'>Setting up React Native Development</a>
+  </li>
+  <li>
+    <a href='chap03.html#leanpub-auto-hello-world-and-the-react-native-cli'>Hello World and the React Native CLI</a>
+  </li>
+  <li>
+    <a href='chap04.html#leanpub-auto-styles-and-flexbox'>Styles and Flexbox</a>
+  </li>
+  <li>
+    <a href='chap05.html#leanpub-auto-main-react-native-ui-components'>Main React Native UI Components</a>
+    <ul>
+      <li>
+        <a href='chap05.html#leanpub-auto-view'>View</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-text'>Text</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-textinput'>TextInput</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-scrollview'>ScrollView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-listview'>ListView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-touchablehighlight'>TouchableHighlight</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-switch'>Switch</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-navigator'>Navigator</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href='chap06.html#leanpub-auto-importing-modules-into-the-xcode-project'>Importing Modules into the Xcode Project</a>
+  </li>
+  <li>
+    <a href='chap07.html#leanpub-auto-project-timer'>Project: Timer</a>
+  </li>
+  <li>
+    <a href='chap08.html#leanpub-auto-project-weather-app'>Project: Weather App</a>
+  </li>
+  <li>
+    <a href='chap09.html#leanpub-auto-quiz'>Quiz</a>
+  </li>
+  <li>
+    <a href='chap10.html#leanpub-auto-actions'>Actions</a>
+  </li>
+  <li>
+    <a href='chap11.html#leanpub-auto-summary'>Summary</a>
+  </li>
+  <li>
+    <a href='chap12.html#leanpub-auto-quiz-answers'>Quiz Answers</a>
+  </li>
+</ul>
+
+</ol>
+</div>
+<div id="leanpub-main" class="kramdown">
+<h2 id="leanpub-auto-styles-and-flexbox">Styles and Flexbox</h2>
+
+<p>The former is a way to create layout, styles, and formatting in the elements. We create an object with <code>StyleSheet.create()</code>. For example, these are our Hello World styles:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">styles</code> <code class="o">=</code> <code class="nx">StyleSheet</code><code class="p">.</code><code class="nx">create</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">container</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno"> 4 </code>    <code class="nx">justifyContent</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno"> 5 </code>    <code class="nx">alignItems</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno"> 6 </code>    <code class="nx">backgroundColor</code><code class="o">:</code> <code class="s1">'#F5FCFF'</code><code class="p">,</code>
+<code class="lineno"> 7 </code>  <code class="p">},</code>
+<code class="lineno"> 8 </code>  <code class="nx">welcome</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 9 </code>    <code class="nx">fontSize</code><code class="o">:</code> <code class="mi">20</code><code class="p">,</code>
+<code class="lineno">10 </code>    <code class="nx">textAlign</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno">11 </code>    <code class="nx">margin</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">12 </code>  <code class="p">},</code>
+<code class="lineno">13 </code>  <code class="nx">instructions</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">14 </code>    <code class="nx">textAlign</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno">15 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'#333333'</code><code class="p">,</code>
+<code class="lineno">16 </code>    <code class="nx">marginBottom</code><code class="o">:</code> <code class="mi">5</code><code class="p">,</code>
+<code class="lineno">17 </code>  <code class="p">},</code>
+<code class="lineno">18 </code><code class="p">});</code>
+</pre></div>
+
+</figure>
+
+<p>I hope you can guess the meaning of some of the properties, like <code>backgroundColor</code> and <code>fontSize</code>. They are similar to <code>background-color</code> and <code>font-size</code> in CSS, and you already know that React uses camelCase instead of dashes. Other style properties, like <code>flex</code>, are specific to React Native. This is what they mean: </p>
+
+<ul>
+  <li><code>flex</code></li>
+  <li><code>justifyContent</code></li>
+  <li>
+<code>alignItems</code> TK</li>
+  <li><code>flexDirection</code></li>
+</ul>
+
+<p>The numbers in the style properties are points, not pixels. The difference is that points can mean 1 or more pixels depending on the screen, so using points liberates developers from writing <code>if/else</code> conditions for various screen formats. Most notably, on old iPhones like the iPhone 3GS 1 point is 1 pixel (1:1). On the other hand, on new iPhones with Retina screens, such as the iPhone 6, 1 point is a 2x2 square of pixels (1:2).</p>
+
+<p>The last statement of the file is akin to <code>ReactDOM.render()</code> from web React development:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="nx">AppRegistry</code><code class="p">.</code><code class="nx">registerComponent</code><code class="p">(</code><code class="s1">'hello'</code><code class="p">,</code> <code class="p">()</code> <code class="o">=&gt;</code> <code class="nx">hello</code><code class="p">);</code>
+</pre></div>
+
+</figure>
+
+<p>It registers our component, <code>hello</code>, in the registry. You can change the name in the fat arrow function (the second argument) to anything else, but refrain from changing the first argument. ES6 fat arrows are covered in chapter 10 and appendix I. Right now, let’s explore the React Native components in more detail.</p>
+
+
+</div>
+</body>
+</html>

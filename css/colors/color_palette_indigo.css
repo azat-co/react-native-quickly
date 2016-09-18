@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Indigo
+
+background_solid    { background: #283593; }
+button              { background: #3f51b5; }
+button_hover        { background: #4457c2; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #3f51b5;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #4457c2;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #3f51b5;
+    -webkit-box-shadow: 0 1px 0 0 #3f51b5;
+    -moz-box-shadow: 0 1px 0 0 #3f51b5;
+    box-shadow: 0 1px 0 0 #3f51b5; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #283593;
+}
+
+a {
+	color:#3f51b5
+}

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Setting up React Native Development</title>
+<link href="stylesheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body dir="ltr" class="kramdown">
+<div id="leanpub-toc">
+<h2></h2>
+<ol class="toc">
+<ul class='toc no-parts'>
+  <li>
+    <a href='chap01.html#leanpub-auto-why-react-native-is-awesome'>Why React Native is Awesome</a>
+  </li>
+  <li>
+    <a href='chap02.html#leanpub-auto-setting-up-react-native-development'>Setting up React Native Development</a>
+  </li>
+  <li>
+    <a href='chap03.html#leanpub-auto-hello-world-and-the-react-native-cli'>Hello World and the React Native CLI</a>
+  </li>
+  <li>
+    <a href='chap04.html#leanpub-auto-styles-and-flexbox'>Styles and Flexbox</a>
+  </li>
+  <li>
+    <a href='chap05.html#leanpub-auto-main-react-native-ui-components'>Main React Native UI Components</a>
+    <ul>
+      <li>
+        <a href='chap05.html#leanpub-auto-view'>View</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-text'>Text</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-textinput'>TextInput</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-scrollview'>ScrollView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-listview'>ListView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-touchablehighlight'>TouchableHighlight</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-switch'>Switch</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-navigator'>Navigator</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href='chap06.html#leanpub-auto-importing-modules-into-the-xcode-project'>Importing Modules into the Xcode Project</a>
+  </li>
+  <li>
+    <a href='chap07.html#leanpub-auto-project-timer'>Project: Timer</a>
+  </li>
+  <li>
+    <a href='chap08.html#leanpub-auto-project-weather-app'>Project: Weather App</a>
+  </li>
+  <li>
+    <a href='chap09.html#leanpub-auto-quiz'>Quiz</a>
+  </li>
+  <li>
+    <a href='chap10.html#leanpub-auto-actions'>Actions</a>
+  </li>
+  <li>
+    <a href='chap11.html#leanpub-auto-summary'>Summary</a>
+  </li>
+  <li>
+    <a href='chap12.html#leanpub-auto-quiz-answers'>Quiz Answers</a>
+  </li>
+</ul>
+
+</ol>
+</div>
+<div id="leanpub-main" class="kramdown">
+<h2 id="leanpub-auto-setting-up-react-native-development">Setting up React Native Development</h2>
+
+<p>This chapter deals only with React Native development for iOS. I’ll be using only universal cross-platform components—for example, <code>Navigator</code> and not <code>NavigatorIOS</code>—so the code provided should work for Android too. However, I won’t go into the details of how you would compile Android projects.</p>
+
+<p>If you don’t work on Apple hardware with Mac OS X, you can install a virtual machine running Mac OS X on a Linux or Windows OS by following <a href="https://blog.udemy.com/xcode-on-windows">this guide</a>. Moving forward, I assume we are all working on Mac OS X, either virtual or not, to build iOS apps.</p>
+
+<p>To get everything installed, you can do it manually or use a package manager. Since we’re working in a Mac OS X environment, I recommend using Homebrew (a.k.a. brew) to install some of the required tools. If you don’t have Homebrew already, you can go to its website, <a href="http://brew.sh">http://brew.sh</a>, or run this Ruby command (Mac OS X comes with Ruby):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>$ ruby -e <code class="s2">"</code><code class="k">$(</code>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/maste<code class="se">\</code>
+<code class="lineno">2 </code>r/install<code class="k">)</code><code class="s2">"</code>
+</pre></div>
+
+</figure>
+
+<p>We will need the following tools and libraries:</p>
+
+<ul>
+  <li>Node.js v5.1 and npm v3.3.12—If you read chapters 1-8, you should have them already. If you jumped right here, follow the instructions in appendix B.</li>
+  <li>Watchman v4.1.0—This tool will monitor and update according to source code file changes. Use <code>$ brew install watchman@4.1.0</code> to install it.</li>
+  <li>Google Chrome—The browser will allow you to debug React Native apps during development. Here’s <a href="https://www.google.com/chrome/browser/desktop/index.html">the link to download it</a>.</li>
+  <li>React Native CLI v0.1.7—This tool will allow you to create boilerplates for your React Native apps. Install it with <code>$ npm install -g react-native-cli@0.1.7</code>.</li>
+  <li>Xcode v7.2—IDE, compilers, and SDKs for iOS, OS X, tvOS, and watchOS. To install it, click the link at <a href="https://developer.apple.com/xcode/download">https://developer.apple.com/xcode/download</a> to open the <a href="https://itunes.apple.com/us/app/xcode/id497799835">Mac App Store</a>.</li>
+  <li>Flow—A static type checker for JavaScript. To install it with Homebrew, run <code>$ brew install flow@0.19.1</code>.</li>
+</ul>
+
+<p>I recommend using NVM v0.29.0, n, or a similar Node version manager. This step is optional but recommended because it means you can switch to Node.js v5.1 even if your main version is more recent. To use Homebrew, execute <code>$ brew install nvm</code> and follow the instructions.</p>
+
+<p>Your system should be ready for the development of iOS apps. Let’s start with the quintessential programming example, Hello World.</p>
+
+
+</div>
+</body>
+</html>

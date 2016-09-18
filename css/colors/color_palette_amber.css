@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Amber
+
+background_solid    { background: #ff8f00; }
+button              { background: #ffc107; }
+button_hover        { background: #ffc414; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #ffc107;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #ffc414;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #ffc107;
+    -webkit-box-shadow: 0 1px 0 0 #ffc107;
+    -moz-box-shadow: 0 1px 0 0 #ffc107;
+    box-shadow: 0 1px 0 0 #ffc107; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #ff8f00;
+}
+
+a {
+	color:#ffc107
+}

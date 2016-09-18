@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Brown
+
+background_solid    { background: #4e342e; }
+button              { background: #795548; }
+button_hover        { background: #855d4e; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #795548;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #855d4e;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #795548;
+    -webkit-box-shadow: 0 1px 0 0 #795548;
+    -moz-box-shadow: 0 1px 0 0 #795548;
+    box-shadow: 0 1px 0 0 #795548; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #4e342e;
+}
+
+a {
+	color:#795548
+}

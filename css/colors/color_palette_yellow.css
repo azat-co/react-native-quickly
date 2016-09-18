@@ -1,0 +1,38 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Yellow
+
+background_solid    { background: #f9a825; }
+button              { background: #ffeb3b; }
+button_hover        { background: #ffed47; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #ffeb3b;
+	color: #412206;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #ffed47;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #ffeb3b;
+    -webkit-box-shadow: 0 1px 0 0 #ffeb3b;
+    -moz-box-shadow: 0 1px 0 0 #ffeb3b;
+    box-shadow: 0 1px 0 0 #ffeb3b; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #f9a825;
+}
+
+a {
+	color:#ffeb3b
+}

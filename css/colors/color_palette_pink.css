@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Pink
+
+background_solid    { background: #ad1457; }
+button              { background: #E91E63; }
+button_hover        { background: #f52067; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #E91E63;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #f52067;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #E91E63;
+    -webkit-box-shadow: 0 1px 0 0 #E91E63;
+    -moz-box-shadow: 0 1px 0 0 #E91E63;
+    box-shadow: 0 1px 0 0 #E91E63; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #ad1457;
+}
+
+a {
+	color:#E91E63
+}

@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Orange
+
+background_solid    { background: #ef6c00; }
+button              { background: #ff9800; }
+button_hover        { background: #ff9e0d; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #ff9800;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #ff9e0d;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #ff9800;
+    -webkit-box-shadow: 0 1px 0 0 #ff9800;
+    -moz-box-shadow: 0 1px 0 0 #ff9800;
+    box-shadow: 0 1px 0 0 #ff9800; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #ef6c00;
+}
+
+a {
+	color:#ff9800
+}

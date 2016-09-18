@@ -1,0 +1,51 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Scheme - Dark
+-------------------------------------------------------------------*/
+
+.hero_fullscreen,
+nav a,
+#more_info,
+#message {
+	color:white;
+}
+
+.hero_fullscreen,
+.preloader_header,
+#more_info {
+	background-color: #212121;	
+}
+
+.preloader_header .preloader_loader svg path.preloader_loader_circlebg {
+    stroke: rgba(255, 255, 255, .1);
+}
+
+.preloader_header .preloader_loader svg path.preloader_loader_circle {
+    transition: stroke-dashoffset 0.2s;
+    stroke: rgba(255, 255, 255, .95);
+}
+
+.contact_form .input-field label{
+	color:white;
+}
+
+.input-field label {
+	color:white;
+}
+
+.newsletter_form input[type=text],
+.newsletter_form input[type=password],
+.newsletter_form input[type=email],
+.newsletter_form input[type=date],
+.newsletter_form textarea, 
+.contact_form input[type=text],
+.contact_form input[type=password],
+.contact_form input[type=email],
+.contact_form input[type=date],
+.contact_form textarea {
+	border-bottom: 1px solid rgba(255, 255, 255, .7);
+}
+
+.countdown_part {
+	border-right: 1px solid rgba(255, 255, 255, .7);
+}

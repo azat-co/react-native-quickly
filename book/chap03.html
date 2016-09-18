@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Hello World and the React Native CLI</title>
+<link href="stylesheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body dir="ltr" class="kramdown">
+<div id="leanpub-toc">
+<h2></h2>
+<ol class="toc">
+<ul class='toc no-parts'>
+  <li>
+    <a href='chap01.html#leanpub-auto-why-react-native-is-awesome'>Why React Native is Awesome</a>
+  </li>
+  <li>
+    <a href='chap02.html#leanpub-auto-setting-up-react-native-development'>Setting up React Native Development</a>
+  </li>
+  <li>
+    <a href='chap03.html#leanpub-auto-hello-world-and-the-react-native-cli'>Hello World and the React Native CLI</a>
+  </li>
+  <li>
+    <a href='chap04.html#leanpub-auto-styles-and-flexbox'>Styles and Flexbox</a>
+  </li>
+  <li>
+    <a href='chap05.html#leanpub-auto-main-react-native-ui-components'>Main React Native UI Components</a>
+    <ul>
+      <li>
+        <a href='chap05.html#leanpub-auto-view'>View</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-text'>Text</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-textinput'>TextInput</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-scrollview'>ScrollView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-listview'>ListView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-touchablehighlight'>TouchableHighlight</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-switch'>Switch</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-navigator'>Navigator</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href='chap06.html#leanpub-auto-importing-modules-into-the-xcode-project'>Importing Modules into the Xcode Project</a>
+  </li>
+  <li>
+    <a href='chap07.html#leanpub-auto-project-timer'>Project: Timer</a>
+  </li>
+  <li>
+    <a href='chap08.html#leanpub-auto-project-weather-app'>Project: Weather App</a>
+  </li>
+  <li>
+    <a href='chap09.html#leanpub-auto-quiz'>Quiz</a>
+  </li>
+  <li>
+    <a href='chap10.html#leanpub-auto-actions'>Actions</a>
+  </li>
+  <li>
+    <a href='chap11.html#leanpub-auto-summary'>Summary</a>
+  </li>
+  <li>
+    <a href='chap12.html#leanpub-auto-quiz-answers'>Quiz Answers</a>
+  </li>
+</ul>
+
+</ol>
+</div>
+<div id="leanpub-main" class="kramdown">
+<h2 id="leanpub-auto-hello-world-and-the-react-native-cli">Hello World and the React Native CLI</h2>
+
+<p>First, navigate into the folder where you want to have your project. Mine is /Users/azat/Documents/Code/react/ch9/. Then run the <code>$ react-native init</code> terminal command to initiate the project by creating iOS and Android projects, package.json, and other files and folders:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>$ react-native init hello
+</pre></div>
+
+</figure>
+
+<p>Wait. It might take some time. There are a few things happening at this moment. Obviously, the folder hello is created. Then, the tool creates package.json. (I love how Node and npm are everywhere nowadays. This wasn’t the case in 2012!) In package.json, the <code>react-native</code> CLI, which is global, puts a local dependency, <code>react-native</code>. This is similar to running <code>$ npm i react-native --save</code>.</p>
+
+<p>After that step, the global <code>react-native</code> CLI runs the local code from the <code>hello/node_modules/react-native/local-cli/cli.js</code> file, and that in turn runs the helper bash script <code>hello/node_modules/react-native/init.sh</code>. That bash script creates scaffolding with React Native code in the index.ios.js and index.android.js files as well as iOS and Android projects in the ios and android folders.</p>
+
+<p>In the ios folder, the tool creates Xcode project files with Objective C code. That’s our focus right now. Here’s the boilerplate folder structure created by the tool:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>/android
+<code class="lineno"> 2 </code>  /app
+<code class="lineno"> 3 </code>  /gradle
+<code class="lineno"> 4 </code>  - build.gradle
+<code class="lineno"> 5 </code>  - gradle.properties
+<code class="lineno"> 6 </code>  - gradlew
+<code class="lineno"> 7 </code>  - gradlew.bat
+<code class="lineno"> 8 </code>  - settings.gradle
+<code class="lineno"> 9 </code>/ios
+<code class="lineno">10 </code>  /hello
+<code class="lineno">11 </code>  /hello.xcodeproj
+<code class="lineno">12 </code>  /helloTests
+<code class="lineno">13 </code>/node_modules
+<code class="lineno">14 </code>  - ...
+<code class="lineno">15 </code>- index.android.js
+<code class="lineno">16 </code>- index.ios.js
+<code class="lineno">17 </code>- package.json
+<code class="lineno">18 </code>- .watchman.config
+<code class="lineno">19 </code>- .flowconfig
+</pre></div>
+
+</figure>
+
+<p>Once everything is generated, you’ll be returned to the command prompt. The output on my computer was this, which even tells me how to start the apps:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>To run your app on iOS:
+<code class="lineno">2 </code>   Open /Users/azat/Documents/Code/react/ch9/hello/ios/hello.xcodeproj in Xcode
+<code class="lineno">3 </code>   Hit the Run button
+<code class="lineno">4 </code>To run your app on Android:
+<code class="lineno">5 </code>   Have an Android emulator running (quickest way to get started), or a device c\
+<code class="lineno">6 </code>onnected
+<code class="lineno">7 </code>   cd /Users/azat/Documents/Code/react/ch9/hello
+<code class="lineno">8 </code>   react-native run-android
+</pre></div>
+
+</figure>
+
+<p>You have two options. You can manually open Xcode and select Open (Command+O) from the File menu, open the hello.xcodeproj file, and click the black rectangle to build and run. Or you can navigate into the folder with <code>$ cd hello</code>, run <code>$ open ios/hello.xcodeproj</code>, and click on “play” in Xcode to build and run.</p>
+
+<p>If you followed the steps correctly, you will see a new terminal window that says React Packager. It starts with a message:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code> ~/Documents/Code/react/ch9/hello/node_modules/react-native/packager ~
+<code class="lineno"> 2 </code> ┌────────────────────────────────────────────────────────────────────────────┐
+<code class="lineno"> 3 </code> │  Running packager on port 8081.                                            │
+<code class="lineno"> 4 </code> │                                                                            │
+<code class="lineno"> 5 </code> │  Keep this packager running while developing on any JS projects. Feel      │
+<code class="lineno"> 6 </code> │  free to close this tab and run your own packager instance if you          │
+<code class="lineno"> 7 </code> │  prefer.                                                                   │
+<code class="lineno"> 8 </code> │                                                                            │
+<code class="lineno"> 9 </code> │  https://github.com/facebook/react-native                                  │
+<code class="lineno">10 </code> │                                                                            │
+<code class="lineno">11 </code> └────────────────────────────────────────────────────────────────────────────┘
+<code class="lineno">12 </code>Looking for JS files in
+<code class="lineno">13 </code>   /Users/azat/Documents/Code/react/ch9/hello
+<code class="lineno">14 </code>
+<code class="lineno">15 </code>[12:15:42 PM] &lt;START&gt; Building Dependency Graph
+<code class="lineno">16 </code>[12:15:42 PM] &lt;START&gt; Crawling File System
+<code class="lineno">17 </code>[12:15:42 PM] &lt;START&gt; Loading bundles layout
+<code class="lineno">18 </code>[12:15:42 PM] &lt;END&gt;   Loading bundles layout (0ms)
+</pre></div>
+
+</figure>
+
+<p>So what is happening here? React Native packages our React Native JavaScript files and serves them on localhost:8081. That’s right, it’s just like any other web server if you open your browser at <a href="http://localhost:8081/index.ios.bundle?platform=ios&amp;dev=true">http://localhost:8081/index.ios.bundle?platform=ios&amp;dev=true</a>. Open it in your browser now. Search for “hello”. You will see the React Native code bundled up together in one big file. This should sound familiar to most web developers. ;-)</p>
+
+<p>Where did I get the <a href="http://localhost:8081/index.ios.bundle?platform=ios&amp;dev=true">http://localhost:8081/index.ios.bundle?platform=ios&amp;dev=true</a> URL? It’s in the hello/ios/hello/AppDelegate.m file, on line 34 (you are using the same version as me, right?):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="n">jsCodeLocation</code> <code class="o">=</code> <code class="p">[</code><code class="bp">NSURL</code> <code class="nl">URLWithString</code><code class="p">:</code><code class="s">@"http://localhost:8081/index.ios.bundle?p\</code>
+<code class="lineno">2 </code><code class="s">latform=ios&amp;dev=true"</code><code class="p">];</code>
+</pre></div>
+
+</figure>
+
+<p>The Objective C code grabs the JavaScript from the server. That’s default option number one. There’s a second option, which is commented at the moment. It takes the JavaScript code from the static file (line 42 in the same file). It’s good to have options!</p>
+
+<p>The comments tell us how we can spin up the server. It’s just the <code>$ npm start</code> command, which runs <code>$ react-native start</code>, so we can use the latter too. So if you are switching between projects or you don’t want to use the terminal process opened automatically by Xcode, you can always start a new server. Just keep in mind, as with any server, that you cannot have two of them listening on the same port. Therefore, terminate the old process before spinning up a new server on localhost:8081.</p>
+
+<p>It takes some time to launch the Simulator window. I prefer working with iPhone 6, not iPhone 6 Plus. This way I have more space for development on my screen. By now you should have the Simulator window opened. Poke around. There’s not much to see, as shown in figure 1.</p>
+
+<p>Go ahead and open the index.io.js file. You can see the familiar-looking JavaScript/Node code. If you’re not comfortable with ES6 yet (or ES2015—its official name), take a look at chapter 10 and appendix I.</p>
+
+<p>At the beginning of the file, there’s a destructuring statement to import objects from React Native:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kd">var</code> <code class="nx">React</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'react-native'</code><code class="p">);</code>
+<code class="lineno">2 </code><code class="kd">var</code> <code class="p">{</code>
+<code class="lineno">3 </code>  <code class="nx">AppRegistry</code><code class="p">,</code>
+<code class="lineno">4 </code>  <code class="nx">StyleSheet</code><code class="p">,</code>
+<code class="lineno">5 </code>  <code class="nx">Text</code><code class="p">,</code>
+<code class="lineno">6 </code>  <code class="nx">View</code><code class="p">,</code>
+<code class="lineno">7 </code><code class="p">}</code> <code class="o">=</code> <code class="nx">React</code><code class="p">;</code>
+</pre></div>
+
+</figure>
+
+<p>Next, you can see your good old friend <code>React.createClass()</code> with the <code>render</code> method:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">hello</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>	<code class="nx">render</code><code class="o">:</code> <code class="kd">function</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>		<code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 4 </code>			<code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">container</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 5 </code>        		<code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">welcome</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 6 </code>		          <code class="nx">Welcome</code> <code class="nx">to</code> <code class="nx">React</code> <code class="nx">Native</code><code class="o">!</code>
+<code class="lineno"> 7 </code>		        <code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 8 </code>	    	    <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">instructions</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 9 </code>	        	  <code class="nx">To</code> <code class="nx">get</code> <code class="nx">started</code><code class="p">,</code> <code class="nx">edit</code> <code class="nx">index</code><code class="p">.</code><code class="nx">ios</code><code class="p">.</code><code class="nx">js</code>
+<code class="lineno">10 </code>		        <code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">11 </code>		        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">instructions</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno">12 </code>					<code class="nx">Press</code> <code class="nx">Cmd</code><code class="o">+</code><code class="nx">R</code> <code class="nx">to</code> <code class="nx">reload</code><code class="p">,{</code><code class="s1">'\n'</code><code class="p">}</code> <code class="nx">Cmd</code><code class="o">+</code><code class="nx">D</code> <code class="nx">or</code> <code class="nx">shake</code> <code class="k">for</code> <code class="nx">dev</code> <code class="nx">menu</code>
+<code class="lineno">13 </code>	        	<code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">14 </code>		     <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">15 </code>		<code class="p">);</code>
+<code class="lineno">16 </code>	<code class="p">}</code>
+<code class="lineno">17 </code><code class="p">});</code>
+</pre></div>
+
+</figure>
+
+<p>Gosh, with good comments like this I’ll soon be out of business—meaning I won’t need to write books. ;-) As they say, pressing Command+R in the Simulator will reload it. Go ahead and change “Welcome to React Native!” to “Hello World!” Save index.ios.js, and reload the app in the Simulator window.</p>
+
+<p>Note: If you are using some nonstandard keyboard layout like Dvorak or Colemak (as I do), in the Simulator window you will have to use the standard US layout for the shortcuts, and for typing text as well.</p>
+
+<p>Observe the changes and notice how we didn’t have to rebuild the Xcode project. Watchman updated the package after we saved the file. The new code was served on the server at localhost:8081. You can see the text “Hello World!” in the browser if you go to <a href="http://localhost:8081/index.ios.bundle?platform=ios&amp;dev=true">http://localhost:8081/index.ios.bundle?platform=ios&amp;dev=true</a>. Once we reloaded the Simulator, the new code was there!</p>
+
+<p>There are two more interesting things in index.ios.js (and then we’ll move on to exploring each component individually): <code>StyleSheet</code> and <code>AppRegistry</code>. They are not in web React, so let me explain them.</p>
+
+
+</div>
+</body>
+</html>

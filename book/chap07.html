@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Project: Timer</title>
+<link href="stylesheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body dir="ltr" class="kramdown">
+<div id="leanpub-toc">
+<h2></h2>
+<ol class="toc">
+<ul class='toc no-parts'>
+  <li>
+    <a href='chap01.html#leanpub-auto-why-react-native-is-awesome'>Why React Native is Awesome</a>
+  </li>
+  <li>
+    <a href='chap02.html#leanpub-auto-setting-up-react-native-development'>Setting up React Native Development</a>
+  </li>
+  <li>
+    <a href='chap03.html#leanpub-auto-hello-world-and-the-react-native-cli'>Hello World and the React Native CLI</a>
+  </li>
+  <li>
+    <a href='chap04.html#leanpub-auto-styles-and-flexbox'>Styles and Flexbox</a>
+  </li>
+  <li>
+    <a href='chap05.html#leanpub-auto-main-react-native-ui-components'>Main React Native UI Components</a>
+    <ul>
+      <li>
+        <a href='chap05.html#leanpub-auto-view'>View</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-text'>Text</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-textinput'>TextInput</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-scrollview'>ScrollView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-listview'>ListView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-touchablehighlight'>TouchableHighlight</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-switch'>Switch</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-navigator'>Navigator</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href='chap06.html#leanpub-auto-importing-modules-into-the-xcode-project'>Importing Modules into the Xcode Project</a>
+  </li>
+  <li>
+    <a href='chap07.html#leanpub-auto-project-timer'>Project: Timer</a>
+  </li>
+  <li>
+    <a href='chap08.html#leanpub-auto-project-weather-app'>Project: Weather App</a>
+  </li>
+  <li>
+    <a href='chap09.html#leanpub-auto-quiz'>Quiz</a>
+  </li>
+  <li>
+    <a href='chap10.html#leanpub-auto-actions'>Actions</a>
+  </li>
+  <li>
+    <a href='chap11.html#leanpub-auto-summary'>Summary</a>
+  </li>
+  <li>
+    <a href='chap12.html#leanpub-auto-quiz-answers'>Quiz Answers</a>
+  </li>
+</ul>
+
+</ol>
+</div>
+<div id="leanpub-main" class="kramdown">
+<h2 id="leanpub-auto-project-timer">Project: Timer</h2>
+
+<p>You’ve seen bits and pieces from the Timer app (Figure 8), which is in ch9/timer and on <a href="https://github.com/azat-co/react/tree/master/ch9/timer">GitHub</a>. I think it will be beneficial if we go through the implementation at once. The main file is <code>index.ios.js</code>. It has three components, not unlike my browser/web React Timer from React Quickly (Manning, 2016), (<a href="https://github.com/azat-co/react-quickly/tree/master/projects/timer">GitHub</a>):</p>
+
+<ul>
+  <li>
+<code>TimerWrapper</code>—A smart component that has most of the logic for the timer</li>
+  <li>
+<code>Timer</code>—A dumb component that plays the sound when the time is up and displays the number of seconds left</li>
+  <li>
+<code>Button</code>—A component that shows a button and triggers the start of the countdown by invoking the handler passed to it by the parent (<code>TimerWrapper</code>)</li>
+</ul>
+
+
+<figure class="image center">
+  <img src="images/ch9-timer-1.png" alt="Figure 8: Timer with control elements to set the time" />
+  <figcaption>Figure 8: Timer with control elements to set the time</figcaption>
+</figure>
+
+
+<p>We start the index.ios.js file with importations of React Native, its objects, and Audio Player:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="s1">'use strict'</code>
+<code class="lineno"> 2 </code>
+<code class="lineno"> 3 </code><code class="kd">var</code> <code class="nx">React</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'react-native'</code><code class="p">),</code>
+<code class="lineno"> 4 </code>  <code class="nx">AudioPlayer</code> <code class="o">=</code> <code class="nx">require</code><code class="p">(</code><code class="s1">'react-native-audioplayer'</code><code class="p">)</code>
+<code class="lineno"> 5 </code>
+<code class="lineno"> 6 </code><code class="kd">var</code> <code class="p">{</code>
+<code class="lineno"> 7 </code>  <code class="nx">AppRegistry</code><code class="p">,</code>
+<code class="lineno"> 8 </code>  <code class="nx">StyleSheet</code><code class="p">,</code>
+<code class="lineno"> 9 </code>  <code class="nx">Text</code><code class="p">,</code>
+<code class="lineno">10 </code>  <code class="nx">View</code><code class="p">,</code>
+<code class="lineno">11 </code>  <code class="nx">ScrollView</code><code class="p">,</code>
+<code class="lineno">12 </code>  <code class="nx">TouchableOpacity</code><code class="p">,</code>
+<code class="lineno">13 </code>  <code class="nx">Switch</code>
+<code class="lineno">14 </code><code class="p">}</code> <code class="o">=</code> <code class="nx">React</code>
+</pre></div>
+
+</figure>
+
+<p>The next statement declares the array of options for the Timer buttons, which we will turn into either number of seconds or number of minutes by using <code>Switch</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kr">const</code> <code class="nx">timerOptions</code> <code class="o">=</code> <code class="p">[</code><code class="mi">5</code><code class="p">,</code> <code class="mi">7</code><code class="p">,</code> <code class="mi">10</code><code class="p">,</code> <code class="mi">12</code><code class="p">,</code> <code class="mi">15</code><code class="p">,</code> <code class="mi">20</code><code class="p">]</code>
+</pre></div>
+
+</figure>
+
+<p>I enhanced <code>TimerWrapper</code> from the chapter 5 project with the dynamic generation of buttons and the seconds to minutes switch. The switch is using the <code>isMinutes</code> state, so let’s set it to <code>false</code> at the beginning. Just to remind you, this example uses some ES6+/ES2015+ syntax. If you are not familiar with it or are not sure whether you’re familiar with it, check out chapter 10 and appendix I.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>var TimerWrapper = React.createClass({
+<code class="lineno">2 </code>  getInitialState () {
+<code class="lineno">3 </code>    return {time: null, int: null, isMinutes: false}
+<code class="lineno">4 </code>  },
+</pre></div>
+
+</figure>
+
+<p>The initial value of <code>isMinutes</code> is <code>false</code>. <code>toggleTime</code> is the handler for the <code>Switch</code>. We flip the value of <code>isMinutes</code> with the logical not (<code>!</code>). It’s important to set the time to <code>null</code>, as otherwise the sound will be triggered each time we flip the switch. The sound play is conditioned on <code>time</code> being <code>0</code>, so if we set it to <code>null</code>, it won’t play. The sound logic is in the <code>Timer</code> component. The React algorithm decides to re-render it when we change the state of <code>isMinutes</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="nx">toggleTime</code><code class="p">(){</code>
+<code class="lineno">2 </code>    <code class="kd">let</code> <code class="nx">time</code> <code class="o">=</code> <code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">time</code>
+<code class="lineno">3 </code>    <code class="k">if</code> <code class="p">(</code><code class="nx">time</code> <code class="o">==</code> <code class="mi">0</code> <code class="p">)</code> <code class="nx">time</code> <code class="o">=</code> <code class="kc">null</code>
+<code class="lineno">4 </code>    <code class="k">this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code><code class="nx">isMinutes</code><code class="o">:</code> <code class="o">!</code><code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">isMinutes</code><code class="p">,</code> <code class="nx">time</code><code class="o">:</code> <code class="nx">time</code><code class="p">})</code>
+<code class="lineno">5 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>The next method starts the timers. If you followed the project in chapter 5, you know how it works. React Native provides an API for timers, i.e., <code>clearInterval()</code> and <code>setInterval()</code> as global objects. The number in the <code>time</code> state is always in seconds, even if we see minutes on the buttons and the switch is turned on:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>  <code class="nx">startTimer</code><code class="p">(</code><code class="nx">time</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno"> 2 </code>    <code class="nx">clearInterval</code><code class="p">(</code><code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="kr">int</code><code class="p">)</code>
+<code class="lineno"> 3 </code>    <code class="kd">var</code> <code class="nx">_this</code><code class="o">=</code> <code class="k">this</code>
+<code class="lineno"> 4 </code>    <code class="kd">var</code> <code class="kr">int</code> <code class="o">=</code> <code class="nx">setInterval</code><code class="p">(</code><code class="kd">function</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 5 </code>      <code class="nx">console</code><code class="p">.</code><code class="nx">log</code><code class="p">(</code><code class="s1">'2: Inside of setInterval'</code><code class="p">)</code>
+<code class="lineno"> 6 </code>      <code class="kd">var</code> <code class="nx">tl</code> <code class="o">=</code> <code class="nx">_this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">time</code> <code class="o">-</code> <code class="mi">1</code>
+<code class="lineno"> 7 </code>      <code class="k">if</code> <code class="p">(</code><code class="nx">tl</code> <code class="o">==</code> <code class="mi">0</code><code class="p">)</code> <code class="nx">clearInterval</code><code class="p">(</code><code class="kr">int</code><code class="p">)</code>
+<code class="lineno"> 8 </code>      <code class="nx">_this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code><code class="nx">time</code><code class="o">:</code> <code class="nx">tl</code><code class="p">})</code>
+<code class="lineno"> 9 </code>    <code class="p">},</code> <code class="mi">1000</code><code class="p">)</code>
+<code class="lineno">10 </code>    <code class="nx">console</code><code class="p">.</code><code class="nx">log</code><code class="p">(</code><code class="s1">'1: After setInterval'</code><code class="p">)</code>
+<code class="lineno">11 </code>    <code class="k">return</code> <code class="k">this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code><code class="nx">time</code><code class="o">:</code> <code class="nx">time</code><code class="p">,</code> <code class="kr">int</code><code class="o">:</code> <code class="kr">int</code><code class="p">})</code>
+<code class="lineno">12 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>In the <code>render</code> method, we are using a simple <code>map()</code> iterator to generate a column of buttons. It’s wrapped in a <code>ScrollView</code>, so you can really go crazy with the <code>timerOptions</code> array by adding more elements, and see what has happened:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>  render() {
+<code class="lineno"> 2 </code>    return (
+<code class="lineno"> 3 </code>      <code class="p">&lt;</code><code class="nt">ScrollView</code><code class="p">&gt;</code>
+<code class="lineno"> 4 </code>        <code class="p">&lt;</code><code class="nt">View</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.container}</code><code class="p">&gt;</code>
+<code class="lineno"> 5 </code>          <code class="p">&lt;</code><code class="nt">Text</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.heading}</code><code class="p">&gt;</code>Timer<code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+<code class="lineno"> 6 </code>          <code class="p">&lt;</code><code class="nt">Text</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.instructions}</code><code class="p">&gt;</code>Press a button<code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+<code class="lineno"> 7 </code>          <code class="p">&lt;</code><code class="nt">View</code> <code class="na">style</code><code class="o">=</code><code class="s">{styles.buttons}</code><code class="p">&gt;</code>
+<code class="lineno"> 8 </code>            {timerOptions.map((item, index, list)=&gt;{
+<code class="lineno"> 9 </code>              return <code class="p">&lt;</code><code class="nt">Button</code> <code class="na">key</code><code class="o">=</code><code class="s">{index}</code> <code class="na">time</code><code class="o">=</code><code class="s">{item}</code> <code class="na">startTimer</code><code class="o">=</code><code class="s">{this.startTimer\</code>
+<code class="lineno">10 </code><code class="err">}</code> <code class="na">isMinutes</code><code class="o">=</code><code class="s">{this.state.isMinutes}/</code><code class="p">&gt;</code>
+<code class="lineno">11 </code>            })}
+<code class="lineno">12 </code>          <code class="p">&lt;/</code><code class="nt">View</code><code class="p">&gt;</code>
+</pre></div>
+
+</figure>
+
+<p>After the buttons, we have a text label that says Minutes and the <code>Switch</code> controlled component:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>          <code class="p">&lt;</code><code class="nt">Text</code><code class="p">&gt;</code>Minutes<code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+<code class="lineno">2 </code>          <code class="p">&lt;</code><code class="nt">Switch</code> <code class="na">onValueChange</code><code class="o">=</code><code class="s">{this.toggleTime}</code> <code class="na">value</code><code class="o">=</code><code class="s">{this.state.isMinutes}</code><code class="p">&gt;</code><code class="err">&lt;</code>\
+<code class="lineno">3 </code>/Switch&gt;
+<code class="lineno">4 </code>          <code class="p">&lt;</code><code class="nt">Timer</code> <code class="na">time</code><code class="o">=</code><code class="s">{this.state.time}/</code><code class="p">&gt;</code>
+<code class="lineno">5 </code>        <code class="p">&lt;/</code><code class="nt">View</code><code class="p">&gt;</code>
+<code class="lineno">6 </code>      <code class="p">&lt;/</code><code class="nt">ScrollView</code><code class="p">&gt;</code>
+<code class="lineno">7 </code>    )
+<code class="lineno">8 </code>  }
+<code class="lineno">9 </code>})
+</pre></div>
+
+</figure>
+
+<p>The buttons we render in <code>TimerWrapper</code> come from this component. It has a ternary condition (a.k.a. the Elvis operator) to set either minutes, by multiplying them by 60 (60 seconds in a minute), or seconds:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kd">var</code> <code class="nx">Button</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno">2 </code>  <code class="nx">startTimer</code><code class="p">(</code><code class="nx">event</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">3 </code>    <code class="kd">let</code> <code class="nx">time</code> <code class="o">=</code> <code class="p">(</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">isMinutes</code><code class="p">)</code> <code class="o">?</code> <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code><code class="o">*</code><code class="mi">60</code> <code class="o">:</code> <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code>
+<code class="lineno">4 </code>    <code class="k">return</code> <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">startTimer</code><code class="p">(</code><code class="nx">time</code><code class="p">)</code>
+<code class="lineno">5 </code>  <code class="p">},</code>
+</pre></div>
+
+</figure>
+
+<p>When rendering, we use <code>TouchableOpacity</code>, which is functionally similar to <code>TouchableHighlight</code> but differs in visual representation (it’s transparent when touched). There is a ternary condition to output the word “minutes” or “seconds” based on the value of the <code>isMinutes</code> property:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno">2 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno">3 </code>      <code class="o">&lt;</code><code class="nx">TouchableOpacity</code> <code class="nx">onPress</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">startTimer</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno">4 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">button</code><code class="p">}</code><code class="o">&gt;</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code><code class="p">}</code> <code class="p">{(</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">isMinutes</code><code class="p">)</code> <code class="o">?</code> <code class="o">\</code>
+<code class="lineno">5 </code><code class="s1">'minutes'</code> <code class="o">:</code> <code class="s1">'seconds'</code><code class="p">}</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">6 </code>      <code class="o">&lt;</code><code class="err">/TouchableOpacity&gt;</code>
+<code class="lineno">7 </code>    <code class="p">)</code>
+<code class="lineno">8 </code>  <code class="p">}</code>
+<code class="lineno">9 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>Timer</code> component renders the number of seconds left as well as playing the sound when this number is <code>0</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">Timer</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>   <code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>     <code class="k">if</code> <code class="p">(</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code> <code class="o">==</code> <code class="mi">0</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno"> 4 </code>      <code class="nx">AudioPlayer</code><code class="p">.</code><code class="nx">play</code><code class="p">(</code><code class="s1">'flute_c_long_01.wav'</code><code class="p">)</code>
+<code class="lineno"> 5 </code>     <code class="p">}</code>
+<code class="lineno"> 6 </code>     <code class="k">if</code> <code class="p">(</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code> <code class="o">==</code> <code class="kc">null</code> <code class="o">||</code> <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code> <code class="o">==</code> <code class="mi">0</code><code class="p">)</code> <code class="k">return</code> <code class="o">&lt;</code><code class="nx">View</code><code class="o">&gt;&lt;</code><code class="nx">Text</code>  <code class="nx">st</code><code class="o">\</code>
+<code class="lineno"> 7 </code><code class="nx">yle</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">heading</code><code class="p">}</code><code class="o">&gt;</code> <code class="o">&lt;</code><code class="err">/Text&gt;&lt;/View&gt;</code>
+<code class="lineno"> 8 </code>     <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 9 </code>       <code class="o">&lt;</code><code class="nx">View</code><code class="o">&gt;</code>
+<code class="lineno">10 </code>         <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">heading</code><code class="p">}</code><code class="o">&gt;</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code><code class="p">}</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">11 </code>         <code class="o">&lt;</code><code class="nx">Text</code><code class="o">&gt;</code><code class="nx">Seconds</code> <code class="nx">left</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">12 </code>       <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">13 </code>     <code class="p">)</code>
+<code class="lineno">14 </code>    <code class="p">}</code>
+<code class="lineno">15 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>styles</code> object uses Flex. In <code>container</code>, there’s <code>flexDirection</code>, set to <code>column</code>. It positions elements vertically, as in a column. Another value is <code>row</code>, which will position them horizontally.</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">styles</code> <code class="o">=</code> <code class="nx">StyleSheet</code><code class="p">.</code><code class="nx">create</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">container</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno"> 4 </code>    <code class="nx">flexDirection</code><code class="o">:</code> <code class="s1">'column'</code><code class="p">,</code>
+<code class="lineno"> 5 </code>    <code class="nx">alignItems</code><code class="o">:</code> <code class="s1">'center'</code>
+<code class="lineno"> 6 </code>  <code class="p">},</code>
+<code class="lineno"> 7 </code>  <code class="nx">heading</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 8 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno"> 9 </code>    <code class="nx">fontSize</code><code class="o">:</code> <code class="mi">36</code><code class="p">,</code>
+<code class="lineno">10 </code>    <code class="nx">paddingTop</code><code class="o">:</code> <code class="mi">40</code><code class="p">,</code>
+<code class="lineno">11 </code>    <code class="nx">margin</code><code class="o">:</code> <code class="mi">10</code>
+<code class="lineno">12 </code>  <code class="p">},</code>
+<code class="lineno">13 </code>  <code class="nx">instructions</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">14 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'#333333'</code><code class="p">,</code>
+<code class="lineno">15 </code>    <code class="nx">marginBottom</code><code class="o">:</code> <code class="mi">15</code><code class="p">,</code>
+<code class="lineno">16 </code>  <code class="p">},</code>
+<code class="lineno">17 </code>  <code class="nx">button</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">18 </code>    <code class="nx">color</code><code class="o">:</code> <code class="s1">'#111'</code><code class="p">,</code>
+<code class="lineno">19 </code>    <code class="nx">marginBottom</code><code class="o">:</code> <code class="mi">15</code><code class="p">,</code>
+<code class="lineno">20 </code>    <code class="nx">borderWidth</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno">21 </code>    <code class="nx">borderColor</code><code class="o">:</code> <code class="s1">'blue'</code><code class="p">,</code>
+<code class="lineno">22 </code>    <code class="nx">padding</code><code class="o">:</code> <code class="mi">10</code><code class="p">,</code>
+<code class="lineno">23 </code>  	<code class="nx">borderRadius</code><code class="o">:</code> <code class="mi">20</code><code class="p">,</code>
+<code class="lineno">24 </code>    <code class="nx">fontWeight</code><code class="o">:</code> <code class="s1">'600'</code>
+<code class="lineno">25 </code>  <code class="p">},</code>
+<code class="lineno">26 </code>  <code class="nx">buttons</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">27 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno">28 </code>    <code class="nx">alignItems</code><code class="o">:</code> <code class="s1">'center'</code><code class="p">,</code>
+<code class="lineno">29 </code>    <code class="nx">justifyContent</code><code class="o">:</code> <code class="s1">'flex-start'</code>
+<code class="lineno">30 </code>  <code class="p">}</code>
+<code class="lineno">31 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>Lastly, there is the register statement:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="nx">AppRegistry</code><code class="p">.</code><code class="nx">registerComponent</code><code class="p">(</code><code class="s1">'timer'</code><code class="p">,</code> <code class="p">()</code> <code class="o">=&gt;</code> <code class="nx">TimerWrapper</code><code class="p">)</code>
+</pre></div>
+
+</figure>
+
+<p>Now, we can install and import the Audio Player into the Xcode project following the steps in the previous section. Don’t forget to include the sound file as well. When you’re done, navigate to the ch9/timer folder and start the local server with <code>$ react-native start</code>. You should see:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>React packager ready.
+</pre></div>
+
+</figure>
+
+<p>Go to your Simulator and refresh it. You should see buttons with seconds on them and the switch in the off position. Turn it on to use minutes and the buttons will change. Pressing on 5 minutes will start the countdown showing seconds left, as shown in Figure 9.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-timer-2.png" alt="Figure 9: Timer using minutes" />
+  <figcaption>Figure 9: Timer using minutes</figcaption>
+</figure>
+
+
+<p>I dare you to redesign this little app (make it prettier!), publish it to the App Store, and send me the link. Maybe you can get to the top charts. Flappy Bird did.</p>
+
+
+</div>
+</body>
+</html>

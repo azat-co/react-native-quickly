@@ -1,0 +1,37 @@
+/*------------------------------------------------------------------
+[Stylesheet]
+Color Palette - Blue Gray
+
+background_solid    { background: #455a64; }
+button              { background: #607d8b; }
+button_hover        { background: #6a8999; }
+-------------------------------------------------------------------*/
+
+.btn,
+.btn-large {
+	background-color: #607d8b;
+}
+
+.btn:hover,
+.btn-large:hover {
+	background-color: #6a8999;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=date]:focus,
+textarea:focus {
+	border-bottom: 1px solid #607d8b;
+    -webkit-box-shadow: 0 1px 0 0 #607d8b;
+    -moz-box-shadow: 0 1px 0 0 #607d8b;
+    box-shadow: 0 1px 0 0 #607d8b; 
+}
+
+.hero_fullscreen.background_solid {
+	background-color: #455a64;
+}
+
+a {
+	color:#607d8b
+}

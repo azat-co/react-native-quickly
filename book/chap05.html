@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Main React Native UI Components</title>
+<link href="stylesheet.css" type="text/css" rel="stylesheet" />
+</head>
+<body dir="ltr" class="kramdown">
+<div id="leanpub-toc">
+<h2></h2>
+<ol class="toc">
+<ul class='toc no-parts'>
+  <li>
+    <a href='chap01.html#leanpub-auto-why-react-native-is-awesome'>Why React Native is Awesome</a>
+  </li>
+  <li>
+    <a href='chap02.html#leanpub-auto-setting-up-react-native-development'>Setting up React Native Development</a>
+  </li>
+  <li>
+    <a href='chap03.html#leanpub-auto-hello-world-and-the-react-native-cli'>Hello World and the React Native CLI</a>
+  </li>
+  <li>
+    <a href='chap04.html#leanpub-auto-styles-and-flexbox'>Styles and Flexbox</a>
+  </li>
+  <li>
+    <a href='chap05.html#leanpub-auto-main-react-native-ui-components'>Main React Native UI Components</a>
+    <ul>
+      <li>
+        <a href='chap05.html#leanpub-auto-view'>View</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-text'>Text</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-textinput'>TextInput</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-scrollview'>ScrollView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-listview'>ListView</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-touchablehighlight'>TouchableHighlight</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-switch'>Switch</a>
+      </li>
+      <li>
+        <a href='chap05.html#leanpub-auto-navigator'>Navigator</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href='chap06.html#leanpub-auto-importing-modules-into-the-xcode-project'>Importing Modules into the Xcode Project</a>
+  </li>
+  <li>
+    <a href='chap07.html#leanpub-auto-project-timer'>Project: Timer</a>
+  </li>
+  <li>
+    <a href='chap08.html#leanpub-auto-project-weather-app'>Project: Weather App</a>
+  </li>
+  <li>
+    <a href='chap09.html#leanpub-auto-quiz'>Quiz</a>
+  </li>
+  <li>
+    <a href='chap10.html#leanpub-auto-actions'>Actions</a>
+  </li>
+  <li>
+    <a href='chap11.html#leanpub-auto-summary'>Summary</a>
+  </li>
+  <li>
+    <a href='chap12.html#leanpub-auto-quiz-answers'>Quiz Answers</a>
+  </li>
+</ul>
+
+</ol>
+</div>
+<div id="leanpub-main" class="kramdown">
+<h2 id="leanpub-auto-main-react-native-ui-components">Main React Native UI Components</h2>
+
+<p>You might have noticed that in the <code>render</code> method we use special tags/elements like <code>&lt;View&gt;</code> and <code>&lt;Text&gt;</code> instead of <code>&lt;div&gt;</code> or <code>&lt;p&gt;</code>. Those special elements or React Native components come from the <code>react-native</code> library. There are whole bunch of them in there, and I’m sure more will come soon. There are components specific to iOS and Android as well as synthetic ones that would work across platforms. Typically, iOS-only components have <code>IOS</code> at the end of their name (for example, <code>NavigatorIOS</code>) while the universal cross-platform components don’t have such endings (for example, <code>Navigator</code>).</p>
+
+<p>Describing all the React Native components would take a book on its own. Also, as I’ve said before, the community and Facebook developers themselves constantly and relentlessly add new components and update existing ones. It’s better to refer to <a href="https://facebook.github.io/react-native/docs/getting-started.html">the official documentation</a> for the full up-to-date list of supported components. However, to be able to develop minimal mobile apps with React Native, you’ll need to learn the main (in my mind) components. They are:</p>
+
+<ul>
+  <li>
+<code>View</code>—Basic view component. Every render must have at least an empty <code>View</code>.</li>
+  <li>
+<code>Text</code>—Text component. All text must be wrapped in this component, unlike text in web React.</li>
+  <li>
+<code>TextInput</code>—Form input field component. Use it to capture user input.</li>
+  <li>
+<code>ScrollView</code>—View with scrollable content. Use it when your content won’t fit on one screen.</li>
+  <li>
+<code>ListView</code>—View with structured data. Use it to output lists or tables.</li>
+  <li>
+<code>TouchableHighlight</code>—User touch component. Use it to capture user touch events, similar to anchor tags in web development.</li>
+  <li>
+<code>Switch</code>—Boolean on/off switch. Use it for settings and forms.</li>
+  <li>
+<code>Navigator</code>—Highly customizable navigation component. Use it to navigate between screens and implement a navigation bar and/or breadcrumbs navigation bar.</li>
+</ul>
+
+<p>All these components were selected because knowing them will provide you with the bare minimum to build somewhat useful apps, as you’ll see in the Timer and Weather App projects. Also, these components are universal; that is, you can (and should) use them for iOS and Android. Maybe you can even use the same code base for index.ios.js and index.android.js.</p>
+
+<p>For this section of the book, I’ll be using code snippets from the Timer and Weather App projects to make the examples more realistic than just some foo-bars. The code for Timer is in ch9/timer and on <a href="https://github.com/azat-co/react/tree/master/ch9/timer">GitHub</a>. The code for Weather App is in ch9/weather and on <a href="https://github.com/azat-co/react/tree/master/ch9/weather">GitHub</a>.</p>
+
+<h3 id="leanpub-auto-view">View</h3>
+
+<p>As I mentioned before, <code>View</code> is the most basic component. If you don’t know what to use, then use <code>View</code>. You can wrap multiple other components in a <code>View</code>, similarly to wrapping them in a <code>&lt;div&gt;</code>, because <code>render()</code> must return <em>only a single element</em>. For example, to output the number of seconds left and a label underneath it, wrap them in a <code>View</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">Timer</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>   <code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>     <code class="c1">// ...</code>
+<code class="lineno"> 4 </code>     <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 5 </code>       <code class="o">&lt;</code><code class="nx">View</code><code class="o">&gt;</code>
+<code class="lineno"> 6 </code>         <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">heading</code><code class="p">}</code><code class="o">&gt;</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code><code class="p">}</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 7 </code>         <code class="o">&lt;</code><code class="nx">Text</code><code class="o">&gt;</code><code class="nx">Seconds</code> <code class="nx">left</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 8 </code>       <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno"> 9 </code>     <code class="p">)</code>
+<code class="lineno">10 </code>    <code class="p">}</code>
+<code class="lineno">11 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<h3 id="leanpub-auto-text">Text</h3>
+
+<p>The <code>Text</code> component is for rendering text. Like most of the other components, we can supply it with styles. For example, this <code>Text</code> element is using Flex and has a font size of 36, padding on top of 40, and a margin of 10:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">TimerWrapper</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="c1">// ...</code>
+<code class="lineno"> 3 </code>  <code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 4 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 5 </code>      <code class="o">&lt;</code><code class="nx">ScrollView</code><code class="o">&gt;</code>
+<code class="lineno"> 6 </code>        <code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">container</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 7 </code>          <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">heading</code><code class="p">}</code><code class="o">&gt;</code><code class="nx">Timer</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 8 </code>         <code class="p">...</code>
+<code class="lineno"> 9 </code>        <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">10 </code>      <code class="o">&lt;</code><code class="err">/ScrollView&gt;</code>
+<code class="lineno">11 </code>    <code class="p">)</code>
+<code class="lineno">12 </code>  <code class="p">}</code>
+<code class="lineno">13 </code><code class="p">})</code>
+<code class="lineno">14 </code>
+<code class="lineno">15 </code><code class="kd">var</code> <code class="nx">styles</code> <code class="o">=</code> <code class="nx">StyleSheet</code><code class="p">.</code><code class="nx">create</code><code class="p">({</code>
+<code class="lineno">16 </code>  <code class="p">...</code>
+<code class="lineno">17 </code>  <code class="nx">heading</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">18 </code>    <code class="nx">flex</code><code class="o">:</code> <code class="mi">1</code><code class="p">,</code>
+<code class="lineno">19 </code>    <code class="nx">fontSize</code><code class="o">:</code> <code class="mi">36</code><code class="p">,</code>
+<code class="lineno">20 </code>    <code class="nx">paddingTop</code><code class="o">:</code> <code class="mi">40</code><code class="p">,</code>
+<code class="lineno">21 </code>    <code class="nx">margin</code><code class="o">:</code> <code class="mi">10</code>
+<code class="lineno">22 </code>  <code class="p">},</code>
+<code class="lineno">23 </code>  <code class="p">...</code>
+<code class="lineno">24 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>The result is shown in Figure 1.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-timer-text.png" alt="Figure 1: Timer text" />
+  <figcaption>Figure 1: Timer text</figcaption>
+</figure>
+
+
+<p>Conveniently, we can combine two or more style objects in the <code>style</code> property using an array. For example, this <code>Text</code> element uses styles from <code>navBarText</code> and <code>navBarButtonText</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>        <code class="p">&lt;</code><code class="nt">Text</code> <code class="na">style</code><code class="o">=</code><code class="s">{[styles.navBarText,</code> <code class="na">styles</code><code class="err">.</code><code class="na">navBarButtonText</code><code class="err">,</code> <code class="err">]}</code><code class="p">&gt;</code>
+<code class="lineno">2 </code>          {'<code class="err">&lt;</code>'} {previousRoute.name}
+<code class="lineno">3 </code>        <code class="p">&lt;/</code><code class="nt">Text</code><code class="p">&gt;</code>
+</pre></div>
+
+</figure>
+
+<p>The <code>style</code> attribute and combining of styles are not exclusive to <code>Text</code>. You can apply them to other components.</p>
+
+<h3 id="leanpub-auto-textinput">TextInput</h3>
+
+<p><code>TextInput</code> is an input field component. You would typically use it in forms to capture user input such as email address, password, name, etc. This component has some familiar properties, such as:</p>
+
+<ul>
+  <li>
+<code>placeholder</code>—Example text that will be shown when the value is empty</li>
+  <li>
+<code>value</code>—The value of the input field</li>
+  <li>
+<code>style</code>—A style attribute</li>
+</ul>
+
+<p>Other attributes are specific to React Native. The main ones are:</p>
+
+<ul>
+  <li>
+<code>enablesReturnKeyAutomatically</code>—If <code>false</code> (the default value), prevents a user from submitting an empty text value by disabling the return key.</li>
+  <li>
+<code>onChange</code>—The method to invoke on value change. Passes the event object as the argument.</li>
+  <li>
+<code>onChangeText</code>—The method to invoke on value change. Passes the text value as the argument.</li>
+  <li>
+<code>onEndEditing</code>—The method to invoke when the user presses the return key on the virtual keyboard.</li>
+  <li>
+<code>multiline</code>—If <code>true</code> (default is <code>false</code>), the field can take multiple lines.</li>
+  <li>
+<code>keyboardType</code>—One of the enumerator values, such as <code>'default'</code>, <code>'numeric'</code>, or <code>'email-address'</code>.</li>
+  <li>
+<code>returnKeyType</code>—Enumerator for the return key, such as <code>'default'</code>, <code>'go'</code>, <code>'google'</code>, <code>'join'</code>, <code>'next'</code>, <code>'route'</code>, <code>'search'</code>, <code>'send'</code>, <code>'yahoo'</code>, <code>'done'</code>, or <code>'emergency-call'</code>. iOS only.</li>
+</ul>
+
+<p>The full list of up-to-date properties for <code>TextInput</code> for iOS and Android is at <a href="https://facebook.github.io/react-native/docs/textinput.html#props">https://facebook.github.io/react-native/docs/textinput.html#props</a>.</p>
+
+<p>Consider this example, which renders a city name input field with the handler <code>this.search</code>. The button on the keyboard will say Search, the value is assigned to the state (a controlled component!), and the placeholder is San Francisco:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="p">&lt;</code><code class="nt">TextInput</code>
+<code class="lineno">2 </code>    <code class="na">placeholder</code><code class="o">=</code><code class="s">"San Francisco"</code>
+<code class="lineno">3 </code>    <code class="na">value</code><code class="o">=</code><code class="s">{this.state.cityName}</code>
+<code class="lineno">4 </code>    <code class="na">returnKeyType</code><code class="o">=</code><code class="s">"search"</code>
+<code class="lineno">5 </code>    <code class="na">enablesReturnKeyAutomatically</code><code class="o">=</code><code class="s">{true}</code>
+<code class="lineno">6 </code>    <code class="na">onChangeText</code><code class="o">=</code><code class="s">{this.handleCityName}</code>
+<code class="lineno">7 </code>    <code class="na">onEndEditing</code><code class="o">=</code><code class="s">{this.search}</code>
+<code class="lineno">8 </code>    <code class="na">style</code><code class="o">=</code><code class="s">{styles.textInput}/</code><code class="p">&gt;</code>
+</pre></div>
+
+</figure>
+
+<p>The result is shown in Figure 2, where you can observe the Search key on the virtual keyboard.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-textinput.png" alt="Figure 2: Search city by name with a virtual keyboard" />
+  <figcaption>Figure 2: Search city by name with a virtual keyboard</figcaption>
+</figure>
+
+
+<p>With the <code>onChangeText</code> property, we get the value of the input field as the argument to the handler function (<code>handleCityName(event)</code>). For example, to process the name of the city and set the state of <code>cityName</code> in a controlled component, we need to implement <code>handleCityName</code> like this:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="p">...</code>
+<code class="lineno">2 </code>  <code class="nx">handleCityName</code><code class="p">(</code><code class="nx">cityName</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno">3 </code>    <code class="k">this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code> <code class="nx">cityName</code><code class="o">:</code> <code class="nx">cityName</code><code class="p">})</code>
+<code class="lineno">4 </code>  <code class="p">},</code>
+<code class="lineno">5 </code>  <code class="p">...</code>
+</pre></div>
+
+</figure>
+<p>On the other hand, if you need more than text, there’s <code>onChange</code>. When the event comes to the <code>onChange</code> handler function, the <code>event</code> argument has a property called <code>nativeEvent</code>, and this property in turn has a property called <code>text</code>. You can implement the <code>onChange</code> handler like this:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="p">...</code>
+<code class="lineno"> 2 </code><code class="nx">onNameChanged</code><code class="o">:</code> <code class="kd">function</code><code class="p">(</code><code class="nx">event</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>  <code class="k">this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code> <code class="nx">name</code><code class="o">:</code> <code class="nx">event</code><code class="p">.</code><code class="nx">nativeEvent</code><code class="p">.</code><code class="nx">text</code> <code class="p">});</code>
+<code class="lineno"> 4 </code><code class="p">},</code>
+<code class="lineno"> 5 </code><code class="p">...</code>
+<code class="lineno"> 6 </code><code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 7 </code>  <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 8 </code>    <code class="o">&lt;</code><code class="nx">TextInput</code> <code class="nx">onChange</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">onNameChange</code><code class="p">}</code> <code class="p">...</code> <code class="o">/&gt;</code>
+<code class="lineno"> 9 </code>  <code class="p">)</code>
+<code class="lineno">10 </code><code class="p">}</code>
+<code class="lineno">11 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<h3 id="leanpub-auto-scrollview">ScrollView</h3>
+
+<p>This is an enhanced version of the <code>View</code> component. It allows for the content to be scrollable, so you can scroll up and down with touch gestures. This is useful when the content won’t fit on one screen. For example, I can use <code>ScrollView</code> as the root of my <code>render()</code> because I know that <code>timerOptions</code> can be a very large array, thus rendering many rows of data (<code>Button</code> components):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">TimerWrapper</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="c1">// ...</code>
+<code class="lineno"> 3 </code>  <code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 4 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 5 </code>      <code class="o">&lt;</code><code class="nx">ScrollView</code><code class="o">&gt;</code>
+<code class="lineno"> 6 </code>        <code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">container</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 7 </code>          <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">heading</code><code class="p">}</code><code class="o">&gt;</code><code class="nx">Timer</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 8 </code>          <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">instructions</code><code class="p">}</code><code class="o">&gt;</code><code class="nx">Press</code> <code class="nx">a</code> <code class="nx">button</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 9 </code>          <code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">buttons</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno">10 </code>            <code class="p">{</code><code class="nx">timerOptions</code><code class="p">.</code><code class="nx">map</code><code class="p">((</code><code class="nx">item</code><code class="p">,</code> <code class="nx">index</code><code class="p">,</code> <code class="nx">list</code><code class="p">)</code><code class="o">=&gt;</code><code class="p">{</code>
+<code class="lineno">11 </code>              <code class="k">return</code> <code class="o">&lt;</code><code class="nx">Button</code> <code class="nx">key</code><code class="o">=</code><code class="p">{</code><code class="nx">index</code><code class="p">}</code> <code class="nx">time</code><code class="o">=</code><code class="p">{</code><code class="nx">item</code><code class="p">}</code> <code class="nx">startTimer</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">startTimer</code><code class="o">\</code>
+<code class="lineno">12 </code><code class="p">}</code> <code class="nx">isMinutes</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">isMinutes</code><code class="p">}</code><code class="o">/&gt;</code>
+<code class="lineno">13 </code>            <code class="p">})}</code>
+<code class="lineno">14 </code>          <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">15 </code>		  <code class="p">...</code>
+<code class="lineno">16 </code>        <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">17 </code>      <code class="o">&lt;</code><code class="err">/ScrollView&gt;</code>
+<code class="lineno">18 </code>    <code class="p">)</code>
+<code class="lineno">19 </code>  <code class="p">}</code>
+<code class="lineno">20 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<h3 id="leanpub-auto-listview">ListView</h3>
+
+<p><code>ListView</code> is a view that renders a list of rows from the data provided. In most cases, you want to wrap a <code>ListView</code> in a <code>ScrollView</code>. The data must be in a certain format. Use <code>dataSource = new ListView.DataSource()</code> to create the data source object, then use <code>dataSource.cloneWithRows(list)</code> to populate the data source with data from a standard JavaScript array.</p>
+
+<p>Here is an example. First we create the data source object:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="kd">let</code> <code class="nx">dataSource</code> <code class="o">=</code> <code class="k">new</code> <code class="nx">ListView</code><code class="p">.</code><code class="nx">DataSource</code><code class="p">({</code>
+<code class="lineno">2 </code>  <code class="nx">rowHasChanged</code><code class="o">:</code> <code class="p">(</code><code class="nx">row1</code><code class="p">,</code> <code class="nx">row2</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="nx">row1</code> <code class="o">!==</code> <code class="nx">row2</code>
+<code class="lineno">3 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>Then we use the <code>cloneWithRows</code> method to fill in the data from an array, <code>response.list</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">navigator</code><code class="p">.</code><code class="nx">push</code><code class="p">({</code>
+<code class="lineno">2 </code>  <code class="nx">name</code><code class="o">:</code> <code class="s1">'Forecast'</code><code class="p">,</code>
+<code class="lineno">3 </code>  <code class="nx">component</code><code class="o">:</code> <code class="nx">Forecast</code><code class="p">,</code>
+<code class="lineno">4 </code>  <code class="nx">passProps</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">5 </code>    <code class="nx">forecastData</code><code class="o">:</code> <code class="nx">dataSource</code><code class="p">.</code><code class="nx">cloneWithRows</code><code class="p">(</code><code class="nx">response</code><code class="p">.</code><code class="nx">list</code><code class="p">),</code>
+<code class="lineno">6 </code>    <code class="nx">forecastRaw</code><code class="o">:</code> <code class="nx">response</code>
+<code class="lineno">7 </code>  <code class="p">}</code>
+<code class="lineno">8 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>Ignore the <code>navigator</code> call for now. It’s coming up later in the chapter.</p>
+
+<p>We have the data, so now let’s render the <code>ListView</code> by providing the properties <code>dataSource</code> and <code>renderRow</code>. For example, this is the list of forecast info, with each row being a forecast on a certain day. The <code>ListView</code>’s parent is <code>ScrollView</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="nx">module</code><code class="p">.</code><code class="nx">exports</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">render</code><code class="o">:</code> <code class="kd">function</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 4 </code>      <code class="o">&lt;</code><code class="nx">ScrollView</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">scroll</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 5 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">text</code><code class="p">}</code><code class="o">&gt;</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">forecastRaw</code><code class="p">.</code><code class="nx">city</code><code class="p">.</code><code class="nx">name</code><code class="p">}</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 6 </code>        <code class="o">&lt;</code><code class="nx">ListView</code> <code class="nx">dataSource</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">forecastData</code><code class="p">}</code> <code class="nx">renderRow</code><code class="o">=</code><code class="p">{</code><code class="nx">ForecastRow</code><code class="p">}</code> <code class="nx">s</code><code class="o">\</code>
+<code class="lineno"> 7 </code><code class="nx">tyle</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">listView</code><code class="p">}</code><code class="o">/&gt;</code>
+<code class="lineno"> 8 </code>      <code class="o">&lt;</code><code class="err">/ScrollView&gt;</code>
+<code class="lineno"> 9 </code>    <code class="p">)</code>
+<code class="lineno">10 </code>  <code class="p">}</code>
+<code class="lineno">11 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>As you can guess, <code>renderRow</code>, which is <code>ForecastRow</code> in this example, is another component that is responsible for rendering an individual item from the data source provided. If there are no methods or states, you can create a stateless component (more on stateless components in chapter 10). In the <code>ForecastRow</code>, we output the date (<code>dt_txt</code>), description (<code>description</code>), and temperature (<code>temp</code>):</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kr">const</code> <code class="nx">ForecastRow</code> <code class="o">=</code> <code class="p">(</code><code class="nx">forecast</code><code class="p">)</code><code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno"> 2 </code>  <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 3 </code>    <code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">row</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 4 </code>      <code class="o">&lt;</code><code class="nx">View</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">rightContainer</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 5 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">subtitle</code><code class="p">}</code><code class="o">&gt;&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno"> 6 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">subtitle</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 7 </code>          <code class="p">{</code><code class="nx">forecast</code><code class="p">.</code><code class="nx">dt_txt</code><code class="p">}</code><code class="o">:</code> <code class="p">{</code><code class="nx">forecast</code><code class="p">.</code><code class="nx">weather</code><code class="p">[</code><code class="mi">0</code><code class="p">].</code><code class="nx">description</code><code class="p">},</code> <code class="p">{</code><code class="nx">forecast</code><code class="p">.</code><code class="nx">main</code><code class="p">.</code><code class="nx">t</code><code class="o">\</code>
+<code class="lineno"> 8 </code><code class="nx">emp</code><code class="p">}</code>
+<code class="lineno"> 9 </code>        <code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">10 </code>       <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">11 </code>    <code class="o">&lt;</code><code class="err">/View&gt;</code>
+<code class="lineno">12 </code>  <code class="p">)</code>
+<code class="lineno">13 </code><code class="p">}</code>
+</pre></div>
+
+</figure>
+
+<p>You can achieve the functionality of <code>ListView</code> with a simple <code>Array.map()</code> construct. In this case, there’s no need for a data source.</p>
+
+<h3 id="leanpub-auto-touchablehighlight">TouchableHighlight</h3>
+
+<p><code>TouchableHighlight</code> captures user touch events. Developers implement buttons akin to anchor (<code>&lt;a&gt;</code>) tags in web development. The action is passed as the value of the <code>onPress</code> property. To implement a button, we also need to put some text inside of it.</p>
+
+<p>For example, this is a button that triggers <code>startTimer</code> and has text that consists of the <code>time</code> property and either the word “minutes” or “seconds”:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kd">var</code> <code class="nx">Button</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">startTimer</code><code class="p">(</code><code class="nx">event</code><code class="p">)</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="c1">// ...</code>
+<code class="lineno"> 4 </code>  <code class="p">},</code>
+<code class="lineno"> 5 </code>  <code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 6 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 7 </code>      <code class="o">&lt;</code><code class="nx">TouchableHighlight</code> <code class="nx">onPress</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">startTimer</code><code class="p">}</code><code class="o">&gt;</code>
+<code class="lineno"> 8 </code>        <code class="o">&lt;</code><code class="nx">Text</code> <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">button</code><code class="p">}</code><code class="o">&gt;</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">time</code><code class="p">}</code> <code class="p">{(</code><code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">isMinutes</code><code class="p">)</code> <code class="o">?</code> <code class="o">\</code>
+<code class="lineno"> 9 </code><code class="s1">'minutes'</code> <code class="o">:</code> <code class="s1">'seconds'</code><code class="p">}</code><code class="o">&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">10 </code>      <code class="o">&lt;</code><code class="err">/TouchableHighlight&gt;</code>
+<code class="lineno">11 </code>    <code class="p">)</code>
+<code class="lineno">12 </code>  <code class="p">}</code>
+<code class="lineno">13 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>The style of <code>TouchableHighlight</code> by itself is nothing; for this reason, when we implement buttons we either style the text inside of the <code>TouchableHighlight</code> (Figure 3) or use an image with the <code>Image</code> component.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-timer-button.png" alt="Figure 3: iOS buttons implemented with TouchableHighlight" />
+  <figcaption>Figure 3: iOS buttons implemented with TouchableHighlight</figcaption>
+</figure>
+
+
+<p>Similar components to <code>TouchableHighlight</code> are:</p>
+
+<ul>
+  <li><code>TouchableNativeFeedback</code></li>
+  <li><code>TouchableOpacity</code></li>
+  <li><code>TouchableWithoutFeedback</code></li>
+</ul>
+
+<h3 id="leanpub-auto-switch">Switch</h3>
+
+<p>You’ve probably seen and used the <code>Switch</code> component or a similar native element many times. A visual example is shown in Figure 9-X. It’s a small toggle that is not dissimilar to a checkbox. This is a Boolean on/off input element that comes in handy in forms and app settings.</p>
+
+
+<figure class="image center">
+  <img src="images/ch9-timer-switch.png" alt="Figure 4: Switch control on iOS" />
+  <figcaption>Figure 4: Switch control on iOS</figcaption>
+</figure>
+
+
+<p>When implementing <code>Switch</code>, you provide at least two properties, <code>onValueChange</code> and <code>value</code> (a controlled component again!). For example, this toggle makes the apps save the city name, or not:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>      <code class="p">...</code>
+<code class="lineno">2 </code>        <code class="o">&lt;</code><code class="nx">Text</code><code class="o">&gt;</code><code class="nx">Remember</code><code class="o">?&lt;</code><code class="err">/Text&gt;</code>
+<code class="lineno">3 </code>        <code class="o">&lt;</code><code class="nx">Switch</code> <code class="nx">onValueChange</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">toggleRemember</code><code class="p">}</code> <code class="nx">value</code><code class="o">=</code><code class="p">{</code><code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">isRemember</code><code class="o">\</code>
+<code class="lineno">4 </code><code class="p">}</code><code class="o">&gt;&lt;</code><code class="err">/Switch&gt;</code>
+<code class="lineno">5 </code>      <code class="p">....</code>
+</pre></div>
+
+</figure>
+
+<p>In the handler <code>toggleRemember</code>, I set the state to the value that is the opposite of the current <code>this.state.isRemember</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno">1 </code>  <code class="c1">// ...</code>
+<code class="lineno">2 </code>  <code class="nx">toggleRemember</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno">3 </code>    <code class="k">this</code><code class="p">.</code><code class="nx">setState</code><code class="p">({</code> <code class="nx">isRemember</code><code class="o">:</code> <code class="o">!</code><code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">isRemember</code><code class="p">},</code> <code class="p">()</code><code class="o">=&gt;</code><code class="p">{</code>
+<code class="lineno">4 </code>      <code class="c1">// Remove the city name from the storage</code>
+<code class="lineno">5 </code>      <code class="k">if</code> <code class="p">(</code><code class="o">!</code><code class="k">this</code><code class="p">.</code><code class="nx">state</code><code class="p">.</code><code class="nx">isRemember</code><code class="p">)</code> <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">storage</code><code class="p">.</code><code class="nx">removeItem</code><code class="p">(</code><code class="s1">'cityName'</code><code class="p">)</code>
+<code class="lineno">6 </code>    <code class="p">})</code>
+<code class="lineno">7 </code>  <code class="p">},</code>
+<code class="lineno">8 </code>  <code class="c1">// ...</code>
+</pre></div>
+
+</figure>
+
+<h3 id="leanpub-auto-navigator">Navigator</h3>
+
+<p><code>Navigator</code> is a highly customizable navigation component to enable navigation between screens in the app. We can use it to implement a navigation bar and/or a breadcrumbs navigation bar. A navigation bar is a menu at the top of the screen with buttons and a title.</p>
+
+<p>There’s also <code>NavigatorIOS</code>, which is not used by Facebook and therefore not officially supported and maintained by the community. <code>NavigatorIOS</code> has a built-in navigation bar, but it works only for iOS development. Another drawback is that <code>NavigatorIOS</code> won’t refresh routes/screens when the properties to those routes change. Conversely, <code>Navigator</code> can be used on iOS and Android, and it refreshes the routes on the change of the properties passed to them. You can customize navigation bars to your liking.</p>
+
+<p>Because <code>Navigator</code> is flexible, I found a few ways to implement it. There is a method where you have a route stack and then navigate by using route IDs and forward/back methods. I settled on this pattern, which uses abstraction and the <code>NavigatorIOS</code> interface (<code>passProps</code>). Let’s say the <code>App</code> component is the one you register with <code>AppRegistry</code>. Then you want to render the <code>Navigator</code> in <code>App</code>’s <code>render</code> method:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code><code class="kr">const</code> <code class="nx">App</code> <code class="o">=</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createClass</code><code class="p">({</code>
+<code class="lineno"> 2 </code>  <code class="nx">render</code><code class="p">()</code> <code class="p">{</code>
+<code class="lineno"> 3 </code>    <code class="k">return</code> <code class="p">(</code>
+<code class="lineno"> 4 </code>      <code class="o">&lt;</code><code class="nx">Navigator</code>
+<code class="lineno"> 5 </code>        <code class="nx">initialRoute</code><code class="o">=</code><code class="p">{{</code>
+<code class="lineno"> 6 </code>          <code class="nx">name</code><code class="o">:</code> <code class="s1">'Search'</code><code class="p">,</code>
+<code class="lineno"> 7 </code>          <code class="nx">index</code><code class="o">:</code> <code class="mi">0</code><code class="p">,</code>
+<code class="lineno"> 8 </code>          <code class="nx">component</code><code class="o">:</code> <code class="nx">Search</code><code class="p">,</code>
+<code class="lineno"> 9 </code>          <code class="nx">passProps</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno">10 </code>            <code class="nx">storage</code><code class="o">:</code> <code class="nx">storage</code>
+<code class="lineno">11 </code>          <code class="p">}</code>
+<code class="lineno">12 </code>        <code class="p">}}</code>
+<code class="lineno">13 </code>        <code class="nx">ref</code><code class="o">=</code><code class="s1">'navigator'</code>
+<code class="lineno">14 </code>        <code class="nx">navigationBar</code><code class="o">=</code><code class="p">{</code>
+<code class="lineno">15 </code>          <code class="o">&lt;</code><code class="nx">Navigator</code><code class="p">.</code><code class="nx">NavigationBar</code>
+<code class="lineno">16 </code>            <code class="nx">routeMapper</code><code class="o">=</code><code class="p">{</code><code class="nx">NavigationBarRouteMapper</code><code class="p">}</code>
+<code class="lineno">17 </code>            <code class="nx">style</code><code class="o">=</code><code class="p">{</code><code class="nx">styles</code><code class="p">.</code><code class="nx">navBar</code><code class="p">}</code>
+<code class="lineno">18 </code>          <code class="o">/&gt;</code>
+<code class="lineno">19 </code>        <code class="p">}</code>
+<code class="lineno">20 </code>        <code class="nx">renderScene</code><code class="o">=</code><code class="p">{(</code><code class="nx">route</code><code class="p">,</code> <code class="nx">navigator</code><code class="p">)</code> <code class="o">=&gt;</code> <code class="p">{</code>
+<code class="lineno">21 </code>          <code class="kd">let</code> <code class="nx">props</code> <code class="o">=</code> <code class="nx">route</code><code class="p">.</code><code class="nx">passProps</code>
+<code class="lineno">22 </code>          <code class="nx">props</code><code class="p">.</code><code class="nx">navigator</code> <code class="o">=</code> <code class="nx">navigator</code>
+<code class="lineno">23 </code>          <code class="nx">props</code><code class="p">.</code><code class="nx">name</code> <code class="o">=</code> <code class="nx">route</code><code class="p">.</code><code class="nx">name</code>
+<code class="lineno">24 </code>          <code class="k">return</code> <code class="nx">React</code><code class="p">.</code><code class="nx">createElement</code><code class="p">(</code><code class="nx">route</code><code class="p">.</code><code class="nx">component</code><code class="p">,</code> <code class="nx">props</code><code class="p">)</code>
+<code class="lineno">25 </code>        <code class="p">}}</code>
+<code class="lineno">26 </code>      <code class="o">/&gt;</code>
+<code class="lineno">27 </code>    <code class="p">)</code>
+<code class="lineno">28 </code>  <code class="p">}</code>
+<code class="lineno">29 </code><code class="p">})</code>
+</pre></div>
+
+</figure>
+
+<p>You can observe several attributes of <code>Navigator</code>:</p>
+
+<ul>
+  <li>
+<code>initialRoute</code>—The very first <code>route</code> object we render.</li>
+  <li>
+<code>ref</code>—The property of the <code>App</code> element that will have the <code>Navigator</code> object. We can use it to jump to new scenes.</li>
+  <li>
+<code>navigationBar</code>—The top menu with title and left and right buttons.</li>
+  <li>
+<code>renderScene</code>—The method that is triggered on the navigation event for every route. We get the <code>route</code> object and render the component using <code>route.component</code> and <code>route.passProps</code>.</li>
+</ul>
+
+<p>To navigate to a new screen like Forecast (<code>Forecast</code> component) and pass properties to it, invoke <code>navigator.push()</code>:</p>
+
+<figure class="code">
+<div class="highlight"><pre><code></code><code class="lineno"> 1 </code>		<code class="c1">// ...</code>
+<code class="lineno"> 2 </code>        <code class="k">this</code><code class="p">.</code><code class="nx">props</code><code class="p">.</code><code class="nx">navigator</code><code class="p">.</code><code class="nx">push</code><code class="p">({</code>
+<code class="lineno"> 3 </code>          <code class="nx">name</code><code class="o">:</code> <code class="s1">'Forecast'</code><code class="p">,</code>
+<code class="lineno"> 4 </code>          <code class="nx">component</code><code class="o">:</code> <code class="nx">Forecast</code><code class="p">,</code>
+<code class="lineno"> 5 </code>          <code class="nx">passProps</code><code class="o">:</code> <code class="p">{</code>
+<code class="lineno"> 6 </code>            <code class="nx">forecastData</code><code class="o">:</code> <code class="nx">dataSource</code><code class="p">.</code><code class="nx">cloneWithRows</code><code class="p">(</code><code class="nx">response</code><code class="p">.</code><code class="nx">list</code><code class="p">),</code>
+<code class="lineno"> 7 </code>            <code class="nx">forecastRaw</code><code class="o">:</code> <code class="nx">response</code>
+<code class="lineno"> 8 </code>          <code class="p">}</code>
+<code class="lineno"> 9 </code>        <code class="p">})</code>
+<code class="lineno">10 </code>        <code class="c1">// ...</code>
+</pre></div>
+
+</figure>
+
+<p>In this example, I’m passing the component and props with each <code>push()</code> call. If you’re using a route stack, which is basically a list of components, then you can pass only an ID or the name of a component, not the entire object, and get the object from the stack. As usual, there’s more than one way to skin a catfish.</p>
+
+
+</div>
+</body>
+</html>
