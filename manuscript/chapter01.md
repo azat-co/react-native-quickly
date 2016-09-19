@@ -213,11 +213,11 @@ var styles = StyleSheet.create({
 });
 ```
 
-I hope you can guess the meaning of some of the properties, like `backgroundColor` and `fontSize`. They are similar to `background-color` and `font-size` in CSS, and you already know that React uses camelCase instead of dashes. Other style properties, like `flex`, are specific to React Native. This is what they mean: <!-- RH Are there supposed to be descriptions of these properties in the following list? Is that what the "TK" means? -->
+I hope you can guess the meaning of some of the properties, like `backgroundColor` and `fontSize`. They are similar to `background-color` and `font-size` in CSS, and you already know that React uses camelCase instead of dashes. Other style properties, like `flex`, are specific to React Native. This is what they mean: 
 
 * `flex`
 * `justifyContent`
-* `alignItems` TK
+* `alignItems`
 * `flexDirection`
 
 The numbers in the style properties are points, not pixels. The difference is that points can mean 1 or more pixels depending on the screen, so using points liberates developers from writing `if/else` conditions for various screen formats. Most notably, on old iPhones like the iPhone 3GS 1 point is 1 pixel (1:1). On the other hand, on new iPhones with Retina screens, such as the iPhone 6, 1 point is a 2x2 square of pixels (1:2).
