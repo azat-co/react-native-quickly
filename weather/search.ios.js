@@ -1,8 +1,7 @@
 'use strict'
 
 var React = require('react-native')
-const Forecast = require('./forecast.ios')
-
+var Forecast = require('./forecast.ios')
 var {
   StyleSheet,
   Text,
@@ -16,39 +15,55 @@ var {
 
 // URL for London, response.json: http://api.openweathermap.org/data/2.5/forecast?q=London&appid=2de143494c0b295cca9337e1e96b00e0&units=metric
 
-const openWeatherAppId = '2de143494c0b295cca9337e1e96b00e0', // Don't be lazy, get your own KEY!
+var openWeatherAppId = '2de143494c0b295cca9337e1e96b00e0', // Don't be lazy, get your own KEY!
   // openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast' // Real API
   openWeatherUrl = 'http://localhost:3000/' // Mock API, start with $ node weather-api
 
 module.exports = React.createClass({
   getInitialState() {
     this.props.storage.getFromStorage('cityName', (cityName) => {
-      if (cityName) this.setState({cityName: cityName, isRemember: true})
+      if (cityName) {
+        this.setState({
+          cityName: cityName,
+          isRemember: true
+        })
+      }
     })
-    return ({isRemember: false, cityName: ''})
+    return {
+      isRemember: false,
+      cityName: ''
+    }
   },
   toggleRemember() {
     console.log('toggle: ', this.state.isRemember)
-    this.setState({ isRemember: !this.state.isRemember}, ()=>{
+    this.setState({
+      isRemember: !this.state.isRemember
+    }, () => {
       if (!this.state.isRemember) this.props.storage.removeItem('cityName')
     })
   },
   handleCityName(cityName) {
-    this.setState({ cityName: cityName})
+    this.setState({cityName: cityName})
   },
   search(event) {
-    let cityName = this.state.cityName,
+    var cityName = this.state.cityName,
       isRemember = this.state.isRemember
-    if (!cityName) return Alert.alert('No City Name',
-      'Please enter city name',
-      [{text: 'OK', onPress: () => console.log('OK Pressed!')}]
-    )
+    if (!cityName) {
+      return Alert.alert(
+        'No City Name',
+        'Please enter city name',
+        [{
+          text: 'OK',
+          onPress: () => console.log('OK Pressed!')
+        }]
+      )
+    }
     fetch(`${openWeatherUrl}/?appid=${openWeatherAppId}&q=${cityName}&units=metric`, {
       method: 'GET'
     }).then((response) => response.json())
       .then((response) => {
         if (isRemember) this.props.storage.setInStorage('cityName', cityName)
-        let dataSource = new ListView.DataSource({
+        var dataSource = new ListView.DataSource({
           rowHasChanged: (row1, row2) => row1 !== row2
         })
         this.props.navigator.push({
@@ -64,7 +79,7 @@ module.exports = React.createClass({
         console.warn(error)
       })
   },
-  render: function() {
+  render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -79,7 +94,7 @@ module.exports = React.createClass({
           returnKeyType="search"
           enablesReturnKeyAutomatically={true}
           onChangeText={this.handleCityName}
-          onEndEditing={this.search} style={styles.textInput}/>
+          onEndEditing={this.search} style={styles.textInput} />
         <Text>Remember?</Text>
         <Switch onValueChange={this.toggleRemember} value={this.state.isRemember}></Switch>
         <TouchableHighlight onPress={this.search}>
@@ -125,7 +140,7 @@ var styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'blue',
     padding: 10,
-  	borderRadius: 20,
+    borderRadius: 20,
     fontWeight: '600',
     marginTop: 30
   }
