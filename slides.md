@@ -98,7 +98,7 @@ Blog: webapplog.com
 
 # Downsides of Hybrid
 
-* Slow
+* Slow, esp. with frameworks (ng)
 * Not all hardware features
 * UX/UI is not as good as native
 
