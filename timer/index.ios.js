@@ -17,7 +17,7 @@ var {
   Switch
 } = React
 
-const timerOptions = [5, 7, 10, 12, 15, 20]
+const timerOptions = [5, 7, 10, 12, 15, 21]
 
 var TimerWrapper = React.createClass({
   getInitialState () {
