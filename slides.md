@@ -96,6 +96,16 @@ Blog: webapplog.com
 
 ---
 
+# Downsides of Hybrid
+
+* Slow
+* Not all hardware features
+* UX/UI is not as good as native
+
+^Facebook main app switched away from Hybrid
+
+---
+
 # Native with JavaScript
 
 ---
@@ -107,13 +117,14 @@ Blog: webapplog.com
 
 ---
 
-# Advantages
+# Advantages of React Native
 
 * Trully Native
 * Use JavaScript
 * Allow for code reuse
 * Better DX
 
+^Facebook Ads, Pages
 
 ---
 
