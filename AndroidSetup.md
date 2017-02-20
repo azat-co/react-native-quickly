@@ -1,6 +1,6 @@
 #Setting up your Android Development Environment
 
-Typing react-native run-android is not as easy as it looks, but follow these steps and you should have it running in no time! Downloading Android Studio is the fastest way to get started because Android Studio automatically downloads the Android SDK and preconfigures some of the settinggs you will need for Android development. 
+Typing react-native run-android is not as easy as it looks, but follow these steps and you should have it running in no time! Downloading Android Studio is the fastest way to get started because Android Studio automatically downloads the Android SDK and preconfigures some of the settings you will need for Android development. 
 
 1. Make sure you have Node, Watchman, and React Native CLI downloaded:
 
