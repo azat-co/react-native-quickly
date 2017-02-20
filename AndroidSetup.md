@@ -38,7 +38,9 @@ Typing react-native run-android is not as easy as it looks, but follow these ste
 6. After all that is downloaded, you must create your environment variables. Add these three lines to your config file (.bashrc, .zshrc, etc.).
 
     >export ANDROID_HOME=**FIND YOUR OWN PATH.. something like /Users/Library/Android/sdk**
+    
     >export PATH=${PATH}:${ANDROID_HOME}/tools
+    
     >export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 7. To open up your react-native application, you must first open up your project file in Android Studio. For this exercise,    navigate to the timer or weather folder and click "android". Open Android Studio using the android folder.
