@@ -8,32 +8,27 @@ Typing react-native run-android is not as easy as it looks, but follow these ste
 
 3. Download Android Studio
 
- ```https://developer.android.com/studio/index.html```
+ <https://developer.android.com/studio/index.html>
 
 4. After opening Android Studio for the first time, click "custom" and make sure these four things are checked and ready to be installed:
 
-   ```
-   Android SDK
+   ```Android SDK
    
    Android SDK Platform
    
    Performance (Intel ® HAXM)
    
-   Android Virtual Device
-   ```
+   Android Virtual Device```
  
 5. React-Native needs the Android 6.0 (Marshmallow) SDK in order to run. To install Marshmallow, open your SDK manager. In Android studio, this can be found by going to **Tools -> Android -> SDK manager**. Alternatively, you can run the command android in your terminal to open up the SDK manager.
 
 6. After all that is downloaded, you must create your environment variables. Add these three lines to your config file (.bashrc, .zshrc, etc.).
 
-    ```
-    export ANDROID_HOME=${HOME}/Library/Android/sdk  
-    (*this must be YOUR path to the android SDK*)
+    >export ANDROID_HOME=${HOME}/Library/Android/sdk  
 
-    export PATH=${PATH}:${ANDROID_HOME}/tools
+    >export PATH=${PATH}:${ANDROID_HOME}/tools
 
-    export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-    ```
+    >export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 
 7. To open up your react-native application, you must first open up your project file in Android Studio. Make sure you open up the android folder in your file structure. 
