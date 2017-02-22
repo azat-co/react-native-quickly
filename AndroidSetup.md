@@ -5,7 +5,9 @@ Typing react-native run-android is not as easy as it looks, but follow these ste
 1. Make sure you have Node, Watchman, and React Native CLI downloaded:
 
    >brew install node
+
    >brew install watchman
+   
    >npm install -g react-native-cli
    
 2. Before you download Android studio, make sure you have the Java Dev Kit on your machine.
