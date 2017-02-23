@@ -9,7 +9,7 @@ In this book, I'll introduce you to React Native for native mobile iOS and Andro
 * Project: Timer
 * Project: Weather App
 
-This book is about getting started with React quickly and not about React Native, which is technically a separate library (or some might even call it a framework). But I figured after eight chapters of working with React for web development, it would be fun to apply our knowledge to mobile development by leveraging this awesome library. You'll be amazed how many React Native skills you already know from React.
+This book is about getting started with React Native quickly and not about React, which is technically a separate library (or some might even call it a framework). But I figured after eight chapters of working with React for web development, it would be fun to apply our knowledge to mobile development by leveraging this awesome library. You'll be amazed how many React Native skills you already know from React.
 
 There's always a balance between making examples too complex or too simple, and thus unrealistic and useless. In this book get ready to build two mobile apps: Timer and Weather apps. The Weather app has 3 screencasts which you can watch at [Node.University](http://node.university/courses/react-native-quickly). They will walk you through the Weather app. 
 
